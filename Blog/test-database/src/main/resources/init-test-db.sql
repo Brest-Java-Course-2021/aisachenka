@@ -1,1 +1,8 @@
-insert into blog(blogName) values ( "Cute Animals" ),("Rock'n'Roll"),("MyBlog");
+INSERT INTO BLOG(BLOG_NAME)
+VALUES ('kitty');
+
+INSERT INTO BLOG(BLOG_NAME)
+VALUES ( 'animals' );
+
+INSERT INTO BLOG(BLOG_NAME)
+VALUES ( 'Deep Purple' );

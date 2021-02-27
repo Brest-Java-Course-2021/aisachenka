@@ -1,6 +1,5 @@
-package com.epam.learn;
+package com.epam.learn.model;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -10,14 +9,14 @@ public class BlogTest {
     @Test
     public void setName() {
         Blog blog = new Blog();
-        blog.setName("Кто-то");
-        assertEquals(blog.getName(),"Кто-то");
+        blog.setBlogName("Кто-то");
+        assertEquals(blog.getBlogName(),"Кто-то");
     }
 
     @Test
     public void getConstructorName(){
         Blog blog = new Blog("Животные");
-        assertEquals(blog.getName(),"Животные");
+        assertEquals(blog.getBlogName(),"Животные");
     }
 
     @Test

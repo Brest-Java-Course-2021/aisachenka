@@ -1,23 +1,23 @@
-package com.epam.learn;
+package com.epam.learn.model;
 
 import java.util.Objects;
 
 public class Blog {
     private Integer blogId;
-    private String name;
+    private String blogName;
 
-    public Blog(String name){
-        this.name = name;
+    public Blog(String blogName){
+        this.blogName = blogName;
     }
 
     public Blog(){}
 
-    public String getName() {
-        return name;
+    public String getBlogName() {
+        return blogName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setBlogName(String blogName) {
+        this.blogName = blogName;
     }
 
     public Integer getBlogId() {
@@ -32,7 +32,7 @@ public class Blog {
     public String toString() {
         return "Blog{" +
                 "blogId=" + blogId +
-                ", name='" + name + '\'' +
+                ", name='" + blogName + '\'' +
                 '}';
     }
 
@@ -41,11 +41,11 @@ public class Blog {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Blog blog = (Blog) o;
-        return blogId.equals(blog.blogId) && name.equals(blog.name);
+        return blogId.equals(blog.blogId) && blogName.equals(blog.blogName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(blogId, name);
+        return Objects.hash(blogId, blogName);
     }
 }

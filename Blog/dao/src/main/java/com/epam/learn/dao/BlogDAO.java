@@ -1,4 +1,4 @@
-package com.epam.learn.model.dao;
+package com.epam.learn.dao;
 
 import com.epam.learn.model.Blog;
 

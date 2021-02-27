@@ -1,5 +1,5 @@
-CREATE table blog(
-    blogId int not null AUTO_INCREMENT,
-    blogName varchar(50) not null unique,
-    primary key(blogId)
-)
+DROP TABLE IF EXISTS BLOG;
+CREATE table BLOG(
+    BLOG_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    BLOG_NAME VARCHAR(50) NOT NULL UNIQUE
+);

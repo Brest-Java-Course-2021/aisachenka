@@ -1,4 +1,4 @@
-package com.epam.learn;
+package com.epam.learn.model;
 
 import org.junit.Test;
 

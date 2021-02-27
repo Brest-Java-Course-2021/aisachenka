@@ -24,7 +24,7 @@
   <modules>
     <module>model</module>
     <module>test-database</module>
-    <!--    <module>dao</module>-->
+    <module>dao</module>
   </modules>
 
   <dependencyManagement>
