@@ -20,6 +20,7 @@ public class BlogDAOJdbc implements BlogDAO {
     public static final String SQL_INSERT_BLOG_QUERY = "INSERT INTO BLOG(BLOG_NAME) VALUES(:BLOG_NAME)";
     public static final String SQL_UPDATE_BLOG_QUERY = "UPDATE BLOG SET BLOG_NAME=:BLOG_NAME WHERE BLOG_ID = :BLOG_ID";
     public static final String SQL_DELETE_BLOG_QUERY = "DELETE FROM BLOG WHERE BLOG_ID = :BLOG_ID";
+    public static final String SQL_COUNT_BLOG_NAME_QUERY = "SELECT COUNT(BLOG_NAME) FROM BLOG WHERE lower(BLOG_NAME)=lower(:BLOG_NAME)";
 
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -42,21 +43,28 @@ public class BlogDAOJdbc implements BlogDAO {
 
     @Override
     public Integer create(Blog blog) {
+        if(!isBlogNameUnique(blog)) throw new IllegalArgumentException("Blog  with the same name already exists");
+
         KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("BLOG_NAME", blog.getBlogName());
         namedParameterJdbcTemplate.update(SQL_INSERT_BLOG_QUERY, sqlParameterSource, keyHolder);
         return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
 
+    private boolean isBlogNameUnique(Blog blog){
+        return namedParameterJdbcTemplate.queryForObject(SQL_COUNT_BLOG_NAME_QUERY,
+                new MapSqlParameterSource("BLOG_NAME", blog.getBlogName()), Integer.class ) == 0;
+    }
+
     @Override
     public Integer update(Blog blog) {
-        KeyHolder keyHolder = new GeneratedKeyHolder();
+        if(!isBlogNameUnique(blog)) throw new IllegalArgumentException("cannot update a field with a blog name that already exists");
+
         Map<String, Object> parametersForQuery = new HashMap<>();
         parametersForQuery.put("BLOG_NAME", blog.getBlogName());
         parametersForQuery.put("BLOG_ID", blog.getBlogId());
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource(parametersForQuery);
-        namedParameterJdbcTemplate.update(SQL_UPDATE_BLOG_QUERY, sqlParameterSource, keyHolder);
-        return Objects.requireNonNull(keyHolder.getKey()).intValue();
+        return namedParameterJdbcTemplate.update(SQL_UPDATE_BLOG_QUERY, sqlParameterSource);
     }
 
     @Override

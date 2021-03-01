@@ -79,6 +79,38 @@ public class BlogDAOJdbcTest {
         assertEquals(blogsAfterAdding.size(), blogs.size() + 1);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void createBlogWithSameName() {
+        List<Blog> blogs = blogDAO.findAll();
+        assertNotNull(blogs);
+        assertTrue(blogs.size() > 0);
+        for (Blog blog : blogs) {
+            assertNotNull(blog.getBlogId());
+            assertNotNull(blog.getBlogName());
+        }
+
+        blogDAO.create(new Blog("hello"));
+        blogDAO.create(new Blog("hello"));
+
+        List<Blog> blogsAfterAdding = blogDAO.findAll();
+        assertEquals(blogsAfterAdding.size(), blogs.size() + 1);
+    }
+    @Test(expected = IllegalArgumentException.class)
+    public void createBlogWithSameNameDifferentCase() {
+        List<Blog> blogs = blogDAO.findAll();
+        assertNotNull(blogs);
+        assertTrue(blogs.size() > 0);
+        for (Blog blog : blogs) {
+            assertNotNull(blog.getBlogId());
+            assertNotNull(blog.getBlogName());
+        }
+
+        blogDAO.create(new Blog("Hi"));
+        blogDAO.create(new Blog("hi"));
+
+    }
+
+
     @Test
     public void update() {
         List<Blog> blogs = blogDAO.findAll();
@@ -89,12 +121,27 @@ public class BlogDAOJdbcTest {
             assertNotNull(blog.getBlogName());
         }
 
-        Blog blog = new Blog();
-        blog.setBlogId(3);
+        Blog blog = blogs.get(0);
+        Integer blogId = blog.getBlogId();
         blog.setBlogName("Мои любимые юморески");
         blogDAO.update(blog);
-        assertNotNull(blogDAO.findById(3));
-        assertEquals(blogDAO.findById(3).get(), blog);
+        assertNotNull(blogDAO.findById(blogId));
+        assertEquals("Мои любимые юморески", blogDAO.findById(blogId).get().getBlogName());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updateWithTheSameNameAsExists() {
+        List<Blog> blogs = blogDAO.findAll();
+        assertNotNull(blogs);
+        assertTrue(blogs.size() > 0);
+        for (Blog blog : blogs) {
+            assertNotNull(blog.getBlogId());
+            assertNotNull(blog.getBlogName());
+        }
+
+        Blog blog = blogs.get(0);
+        blog.setBlogName(blogs.get(1).getBlogName());
+        blogDAO.update(blog);
     }
 
     @Test
