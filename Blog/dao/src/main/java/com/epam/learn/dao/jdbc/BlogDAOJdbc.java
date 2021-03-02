@@ -21,6 +21,7 @@ public class BlogDAOJdbc implements BlogDAO {
     public static final String SQL_UPDATE_BLOG_QUERY = "UPDATE BLOG SET BLOG_NAME=:BLOG_NAME WHERE BLOG_ID = :BLOG_ID";
     public static final String SQL_DELETE_BLOG_QUERY = "DELETE FROM BLOG WHERE BLOG_ID = :BLOG_ID";
     public static final String SQL_COUNT_BLOG_NAME_QUERY = "SELECT COUNT(BLOG_NAME) FROM BLOG WHERE lower(BLOG_NAME)=lower(:BLOG_NAME)";
+    public static final String SQL_COUNT_BLOG_ID_QUERY = "SELECT COUNT(BLOG_ID) FROM BLOG WHERE BLOG_ID=:BLOG_ID";
 
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -56,10 +57,15 @@ public class BlogDAOJdbc implements BlogDAO {
                 new MapSqlParameterSource("BLOG_NAME", blog.getBlogName()), Integer.class ) == 0;
     }
 
+    private boolean isBlogIdExists(Integer blogId){
+        return namedParameterJdbcTemplate.queryForObject(SQL_COUNT_BLOG_ID_QUERY,
+                new MapSqlParameterSource("BLOG_ID", blogId), Integer.class ) == 1;
+    }
+
     @Override
     public Integer update(Blog blog) {
         if(!isBlogNameUnique(blog)) throw new IllegalArgumentException("cannot update a field with a blog name that already exists");
-
+        if(!isBlogIdExists(blog.getBlogId())) throw new IllegalArgumentException("this blog Id doesn't exists");
         Map<String, Object> parametersForQuery = new HashMap<>();
         parametersForQuery.put("BLOG_NAME", blog.getBlogName());
         parametersForQuery.put("BLOG_ID", blog.getBlogId());
@@ -69,6 +75,7 @@ public class BlogDAOJdbc implements BlogDAO {
 
     @Override
     public Integer delete(Integer blogId) {
+        if(!isBlogIdExists(blogId)) throw new IllegalArgumentException("this blog Id doesn't exists");
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("BLOG_ID", blogId);
         return namedParameterJdbcTemplate.update(SQL_DELETE_BLOG_QUERY,sqlParameterSource);
     }
