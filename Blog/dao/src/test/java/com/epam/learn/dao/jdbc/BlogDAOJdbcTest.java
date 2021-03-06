@@ -129,23 +129,6 @@ public class BlogDAOJdbcTest {
         assertEquals("Мои любимые юморески", blogDAO.findById(blogId).get().getBlogName());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void updateWithUnknownBlogId() {
-        List<Blog> blogs = blogDAO.findAll();
-        assertNotNull(blogs);
-        assertTrue(blogs.size() > 0);
-        for (Blog blog : blogs) {
-            assertNotNull(blog.getBlogId());
-            assertNotNull(blog.getBlogName());
-        }
-
-        Blog blog = new Blog("TEST");
-        blog.setBlogId(999);
-        blogDAO.update(blog);
-
-        List<Blog> blogsAfterUpdate = blogDAO.findAll();
-    }
-
 
     @Test(expected = IllegalArgumentException.class)
     public void updateWithTheSameNameAsExists() {
@@ -185,20 +168,5 @@ public class BlogDAOJdbcTest {
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void deleteUnknownBlogId() {
-        List<Blog> blogs = blogDAO.findAll();
-        assertNotNull(blogs);
-        assertTrue(blogs.size() > 0);
-        for (Blog blog : blogs) {
-            assertNotNull(blog.getBlogId());
-            assertNotNull(blog.getBlogName());
-        }
-
-        blogDAO.delete(999);
-
-        List<Blog> blogsAfterDeleting = blogDAO.findAll();
-
-    }
 
 }
