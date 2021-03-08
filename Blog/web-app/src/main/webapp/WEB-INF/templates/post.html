@@ -10,7 +10,7 @@
           th:href="@{/resources/static/css/style.css}">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <title>Blog Edit</title>
+    <title>Post Edit</title>
 </head>
 <body>
 
@@ -25,18 +25,18 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="blogs.html"
+                        <a class="nav-link" href="blogs.html"
                            th:href="@{/blogs}">Blogs</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="posts.html"
+                        <a class="nav-link active" href="posts.html"
                            th:href="@{/posts}">Posts</a>
                     </li>
 
                 </ul>
             </div>
-            <a href="blogs.html" th:href="@{/blogs}" type="button" class="btn-close btn-close-white" aria-label="Close"></a>
+            <a href="posts.html" th:href="@{/posts.html}" type="button" class="btn-close btn-close-white" aria-label="Close"></a>
 
         </div>
 
@@ -60,17 +60,30 @@
                         <form>
                             <div class="mb-3">
                                 <label class="form-label"
-                                       for="field_blogName">Blog Name</label>
+                                       for="field_postText">Text of Post</label>
                                 <input class="form-control "
-                                       id="field_blogName"
-                                       type="text" value="Deep Purple"/>
+                                       id="field_postText"
+                                       type="text" value="Пабло Эскобар тратил 300$ ежемесячно только на шикарную шляпу, чтобы та была как раз"/>
                             </div>
+                            <div class="mb-3">
+                                <input class="form-control "
+                                       id="field_postDate"
+                                       type="date"/>
+                            </div>
+
+                            <div class="mb-3">
+                                <input class="form-control "
+                                       id="field_numberOfLikes"
+                                       value="666"
+                                       type="number"/>
+                            </div>
+
                             <div class="d-flex justify-content-end">
-                                <a href="blogs.html"
-                                   th:href="@{/blogs}"
+                                <a href="posts.html"
+                                   th:href="@{/posts}"
                                    class="btn btn-light me-1"
                                    title="Cancel">Cancel</a>
-                                <a href="blogs.html"
+                                <a href="posts.html"
                                    th:href="@{/blogs}"
                                    class="btn btn-primary"
                                    title="Save blog">Save</a>
