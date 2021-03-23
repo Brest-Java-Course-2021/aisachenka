@@ -1,4 +1,4 @@
-package com.epam.learn.service;
+package com.epam.learn.service.web_app;
 
 
 import org.springframework.stereotype.Controller;

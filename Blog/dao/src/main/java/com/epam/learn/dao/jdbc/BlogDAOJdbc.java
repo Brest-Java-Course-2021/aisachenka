@@ -5,6 +5,7 @@ import com.epam.learn.model.Blog;
 import com.epam.learn.dao.BlogDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -12,21 +13,27 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
-
 
 public class BlogDAOJdbc implements BlogDAO {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(BlogDAOJdbc.class);
 
-    public static final String SQL_FIND_ALL_QUERY = "SELECT * FROM BLOG AS B ORDER BY BLOG_NAME";
-    public static final String SQL_FIND_BY_ID_QUERY = "SELECT * FROM BLOG AS B WHERE B.BLOG_ID = :BLOG_ID";
-    public static final String SQL_INSERT_BLOG_QUERY = "INSERT INTO BLOG(BLOG_NAME) VALUES(:BLOG_NAME)";
-    public static final String SQL_UPDATE_BLOG_QUERY = "UPDATE BLOG SET BLOG_NAME=:BLOG_NAME WHERE BLOG_ID = :BLOG_ID";
-    public static final String SQL_DELETE_BLOG_QUERY = "DELETE FROM BLOG WHERE BLOG_ID = :BLOG_ID";
-    public static final String SQL_COUNT_BLOG_NAME_QUERY = "SELECT COUNT(BLOG_NAME) FROM BLOG WHERE lower(BLOG_NAME)=lower(:BLOG_NAME)";
-    public static final String SQL_COUNT_BLOG_ID_QUERY = "SELECT COUNT(BLOG_ID) FROM BLOG WHERE BLOG_ID=:BLOG_ID";
+    @Value("${blog.select}")
+    private String SQL_FIND_ALL_QUERY;
+    @Value("${blog.findById}")
+    private String SQL_FIND_BY_ID_QUERY;
+    @Value("${blog.create}")
+    private String SQL_INSERT_BLOG_QUERY;
+    @Value("${blog.update}")
+    private String SQL_UPDATE_BLOG_QUERY;
+    @Value("${blog.delete}")
+    private String SQL_DELETE_BLOG_QUERY;
+    @Value("${blog.count}")
+    private String SQL_COUNT_BLOG_NAME_QUERY;
+
 
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 

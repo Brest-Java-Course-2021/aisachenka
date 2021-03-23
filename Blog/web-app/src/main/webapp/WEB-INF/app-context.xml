@@ -2,12 +2,13 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xsi:schemaLocation="http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd">
+        http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
     <!-- Use spring servlet for all requests, including static resources -->
     <mvc:default-servlet-handler/>
@@ -47,4 +48,43 @@
         <property name="characterEncoding" value="UTF-8" />
     </bean>
 
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <bean id="BlogDAO" class="com.epam.learn.dao.jdbc.BlogDAOJdbc">
+        <constructor-arg ref="namedParameterJdbcTemplate"/>
+    </bean>
+
+    <bean id="BlogDtoDAO" class="com.epam.learn.dao.jdbc.BlogDAODtoJdbc">
+        <constructor-arg ref="namedParameterJdbcTemplate"/>
+    </bean>
+
+<!--    <bean id="departmentService" class="com.epam.learn.service.impl.DepartmentServiceImpl">-->
+<!--        <constructor-arg name="departmentDao" ref="departmentDao"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="departmentDtoService" class="com.epam.brest.service.impl.DepartmentDtoServiceImpl">-->
+<!--        <constructor-arg name="departmentDtoDao" ref="departmentDtoDao"/>-->
+<!--    </bean>-->
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:mem:testdb;MODE=MySQL;DB_CLOSE_DELAY=-1"/>
+        <property name="username" value="sa"/>
+        <property name="password" value="password"/>
+    </bean>
+
+    <jdbc:initialize-database>
+        <jdbc:script location="classpath*:create-test-db.sql"/>
+        <jdbc:script location="classpath*:init-test-db.sql"/>
+    </jdbc:initialize-database>
+
+    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath*:dao.properties</value>
+            </list>
+        </property>
+    </bean>
 </beans>

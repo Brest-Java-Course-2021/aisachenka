@@ -74,9 +74,9 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Animals</td>
-                            <td>666</td>
+                        <tr th:each="blog: ${blogs}">
+                            <td th:text="${blog.blogName}">Animals</td>
+                            <td th:text="${blog.maxNumberOfLikes}">666</td>
                             <td class="text-end">
                                 <a href="blogs.html"
                                    th:href="@{/blog/1}"
@@ -91,7 +91,7 @@
                                 </span>
                             </td>
                         </tr>
-                        <tr>
+                        <tr th:remove="all">
                             <td>Deep Purple</td>
                             <td>999</td>
                             <td class="text-end">
@@ -108,7 +108,7 @@
                                 </span>
                             </td>
                         </tr>
-                        <tr>
+                        <tr th:remove="all">
                             <td>Юморески</td>
                             <td>345</td>
                             <td class="text-end">
@@ -125,7 +125,7 @@
                                 </span>
                             </td>
                         </tr>
-                        <tr>
+                        <tr th:remove="all">
                             <td>Все о Java</td>
                             <td>15</td>
                             <td class="text-end">
@@ -142,7 +142,7 @@
                                 </span>
                             </td>
                         </tr>
-                        <tr>
+                        <tr th:remove="all">
                             <td>I was a realy lonely estate, you know, right?</td>
                             <td>45646</td>
                             <td class="text-end">

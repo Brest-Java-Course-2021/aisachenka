@@ -1,4 +1,4 @@
-package com.epam.learn.impl;
+package com.epam.learn.service.impl;
 
 import com.epam.learn.dao.BlogDAO;
 import com.epam.learn.model.Blog;
@@ -16,6 +16,7 @@ public class BlogServiceImpl implements BlogService {
 
     private final BlogDAO blogDAO;
 
+    @Autowired
     public BlogServiceImpl(BlogDAO blogDAO) {
         this.blogDAO = blogDAO;
     }

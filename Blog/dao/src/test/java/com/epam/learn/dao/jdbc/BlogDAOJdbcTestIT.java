@@ -2,22 +2,24 @@ package com.epam.learn.dao.jdbc;
 
 import com.epam.learn.dao.BlogDAO;
 import com.epam.learn.model.Blog;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath*:test-db.xml", "classpath*:test-dao.xml"})
-public class BlogDAOJdbcTest {
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(locations = {"classpath*:test-db.xml", "classpath*:test-dao.xml","classpath*:dao.xml"})
+public class BlogDAOJdbcTestIT {
 
     @Autowired
     BlogDAO blogDAO;
@@ -57,9 +59,11 @@ public class BlogDAOJdbcTest {
     }
 
 
-    @Test(expected = EmptyResultDataAccessException.class)
+    @Test
     public void findByIdExeptionalTest() {
-        blogDAO.findById(999).get();
+        assertThrows(EmptyResultDataAccessException.class , ()->{
+            blogDAO.findById(999).get();
+        });
     }
 
     @Test
@@ -79,7 +83,7 @@ public class BlogDAOJdbcTest {
         assertEquals(blogsAfterAdding.size(), blogs.size() + 1);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void createBlogWithSameName() {
         List<Blog> blogs = blogDAO.findAll();
         assertNotNull(blogs);
@@ -89,13 +93,14 @@ public class BlogDAOJdbcTest {
             assertNotNull(blog.getBlogName());
         }
 
-        blogDAO.create(new Blog("hello"));
-        blogDAO.create(new Blog("hello"));
 
-        List<Blog> blogsAfterAdding = blogDAO.findAll();
-        assertEquals(blogsAfterAdding.size(), blogs.size() + 1);
+        assertThrows(IllegalArgumentException.class,()->{
+            blogDAO.create(new Blog("hello"));
+            blogDAO.create(new Blog("hello"));
+        });
+
     }
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void createBlogWithSameNameDifferentCase() {
         List<Blog> blogs = blogDAO.findAll();
         assertNotNull(blogs);
@@ -105,9 +110,10 @@ public class BlogDAOJdbcTest {
             assertNotNull(blog.getBlogName());
         }
 
-        blogDAO.create(new Blog("Hi"));
-        blogDAO.create(new Blog("hi"));
-
+        assertThrows(IllegalArgumentException.class,()->{
+            blogDAO.create(new Blog("Hi"));
+            blogDAO.create(new Blog("hi"));
+        });
     }
 
 
@@ -130,7 +136,7 @@ public class BlogDAOJdbcTest {
     }
 
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void updateWithTheSameNameAsExists() {
         List<Blog> blogs = blogDAO.findAll();
         assertNotNull(blogs);
@@ -142,7 +148,11 @@ public class BlogDAOJdbcTest {
 
         Blog blog = blogs.get(0);
         blog.setBlogName(blogs.get(1).getBlogName());
-        blogDAO.update(blog);
+
+        assertThrows(IllegalArgumentException.class,()->{
+            blogDAO.update(blog);
+        });
+
     }
 
     @Test
@@ -161,7 +171,7 @@ public class BlogDAOJdbcTest {
         assertEquals(blogsAfterAdding.size(), blogs.size() + 1);
 
 
-        Integer deletedCount = blogDAO.delete(1);
+        Integer deletedCount = blogDAO.delete(4);
         List<Blog> blogsAfterDeleting = blogDAO.findAll();
         assertEquals(blogsAfterAdding.size(), blogsAfterDeleting.size() + 1);
         assertTrue(deletedCount == 1);

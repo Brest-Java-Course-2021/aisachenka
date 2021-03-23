@@ -12,4 +12,8 @@
         <constructor-arg ref="namedParameterJdbcTemplate"/>
     </bean>
 
+    <bean id="BlogDtoDAO" class="com.epam.learn.dao.jdbc.BlogDAODtoJdbc">
+        <constructor-arg ref="namedParameterJdbcTemplate"/>
+    </bean>
+
 </beans>
