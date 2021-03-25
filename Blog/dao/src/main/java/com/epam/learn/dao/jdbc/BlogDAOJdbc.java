@@ -6,6 +6,7 @@ import com.epam.learn.dao.BlogDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -53,7 +54,8 @@ public class BlogDAOJdbc implements BlogDAO {
     public Optional<Blog> findById(Integer blogId) {
         LOGGER.debug("Find Blogs by Id {}", blogId);
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("BLOG_ID", blogId);
-        return Optional.ofNullable((Blog) namedParameterJdbcTemplate.queryForObject(SQL_FIND_BY_ID_QUERY, sqlParameterSource, rowMapper));
+        List<Blog> results = namedParameterJdbcTemplate.query(SQL_FIND_BY_ID_QUERY, sqlParameterSource, rowMapper);
+        return Optional.ofNullable(DataAccessUtils.uniqueResult(results));
     }
 
     @Override

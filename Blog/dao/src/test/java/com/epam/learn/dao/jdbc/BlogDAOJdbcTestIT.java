@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = {"classpath*:test-db.xml", "classpath*:test-dao.xml","classpath*:dao.xml"})
+@ContextConfiguration(locations = {"classpath*:test-db.xml", "classpath*:test-dao.xml", "classpath*:dao.xml"})
 public class BlogDAOJdbcTestIT {
 
     @Autowired
@@ -61,9 +61,7 @@ public class BlogDAOJdbcTestIT {
 
     @Test
     public void findByIdExeptionalTest() {
-        assertThrows(EmptyResultDataAccessException.class , ()->{
-            blogDAO.findById(999).get();
-        });
+        assertFalse(blogDAO.findById(999).isPresent());
     }
 
     @Test
@@ -94,12 +92,13 @@ public class BlogDAOJdbcTestIT {
         }
 
 
-        assertThrows(IllegalArgumentException.class,()->{
+        assertThrows(IllegalArgumentException.class, () -> {
             blogDAO.create(new Blog("hello"));
             blogDAO.create(new Blog("hello"));
         });
 
     }
+
     @Test
     public void createBlogWithSameNameDifferentCase() {
         List<Blog> blogs = blogDAO.findAll();
@@ -110,7 +109,7 @@ public class BlogDAOJdbcTestIT {
             assertNotNull(blog.getBlogName());
         }
 
-        assertThrows(IllegalArgumentException.class,()->{
+        assertThrows(IllegalArgumentException.class, () -> {
             blogDAO.create(new Blog("Hi"));
             blogDAO.create(new Blog("hi"));
         });
@@ -149,7 +148,7 @@ public class BlogDAOJdbcTestIT {
         Blog blog = blogs.get(0);
         blog.setBlogName(blogs.get(1).getBlogName());
 
-        assertThrows(IllegalArgumentException.class,()->{
+        assertThrows(IllegalArgumentException.class, () -> {
             blogDAO.update(blog);
         });
 

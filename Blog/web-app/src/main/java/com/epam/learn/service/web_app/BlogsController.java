@@ -1,5 +1,6 @@
 package com.epam.learn.service.web_app;
 
+import com.epam.learn.model.Blog;
 import com.epam.learn.service.BlogDtoService;
 import com.epam.learn.service.BlogService;
 import org.slf4j.Logger;
@@ -8,7 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Optional;
 
 @Controller
 public class BlogsController {
@@ -31,13 +36,35 @@ public class BlogsController {
     }
 
     @GetMapping(value = "blog/{id}")
-    public String editBlog(@PathVariable Integer id, Model model){
-        return "blog";
+    public String getFormOfEditBlog(@PathVariable Integer id, Model model){
+        LOGGER.debug("getFormOfEditBlog() {} {}", id, model);
+        Optional<Blog> optionalBlog = blogService.findById(id);
+        if(optionalBlog.isPresent()){
+            model.addAttribute("blog",optionalBlog.get());
+            return "blog";
+        }
+        LOGGER.warn("getFormOfEditBlog() such id doesn't exist exception {} {}", id, model);
+        throw new IllegalArgumentException("Such id doesn't exists");
+        //return "redirect:/error";
     }
 
     @GetMapping(value = "blog/add")
-    public String addBlog(Model model){
-        return "blog";
+    public String getFormOfaddBlog(Model model){
+        model.addAttribute("blog", new Blog());
+        return "newBlog";
     }
 
+    @PostMapping(value = "blog/add")
+    public String addBlog(Blog blog){
+        LOGGER.debug("addBlog() {}",blog);
+        blogService.create(blog);
+        return "redirect:/blogs";
+    }
+
+    @PostMapping(value = "blog/{id}")
+    public String editBlog(Blog blog){
+        LOGGER.debug("editBlog() {}", blog);
+        blogService.update(blog);
+        return "redirect:/blogs";
+    }
 }

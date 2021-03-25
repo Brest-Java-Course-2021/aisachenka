@@ -79,7 +79,7 @@
                             <td th:text="${blog.maxNumberOfLikes}">666</td>
                             <td class="text-end">
                                 <a href="blogs.html"
-                                   th:href="@{/blog/1}"
+                                   th:href="@{|/blog/${blog.blogId}|}"
                                    class="btn-sm btn-outline-secondary"
                                    title="Edit blog">
                                     <i class="bi-pen"></i><span class="d-none d-md-inline">&nbsp;Edit</span></a>
