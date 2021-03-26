@@ -54,6 +54,14 @@ public class BlogsController {
         return "newBlog";
     }
 
+    @GetMapping(value = "blog/{id}/delete")
+    public String deleteBlog(@PathVariable Integer id){
+        LOGGER.debug("deleteBlog() id={}", id);
+        // todo: допилить js для delete, a может и не допилить
+        blogService.delete(id);
+        return "redirect:/blogs";
+    }
+
     @PostMapping(value = "blog/add")
     public String addBlog(Blog blog){
         LOGGER.debug("addBlog() {}",blog);

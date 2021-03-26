@@ -51,7 +51,7 @@
 
     </nav>
 
-<!-- Bar b-n table and navbar -->
+    <!-- Bar b-n table and navbar -->
     <nav id="main-header"
          class="py-1 mb-xxl-3` navbar navbar-light">
         <div class="container-fluid">
@@ -69,8 +69,8 @@
                         <thead class="table-dark">
                         <tr>
                             <th style="color: #FF6F00">Blog name</th>
-                            <th style="color: #FF6F00" > Max number of likes &#9829;</th>
-                            <th style="color: #FF6F00"> </th>
+                            <th style="color: #FF6F00"> Max number of likes &#9829;</th>
+                            <th style="color: #FF6F00"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -83,12 +83,14 @@
                                    class="btn-sm btn-outline-secondary"
                                    title="Edit blog">
                                     <i class="bi-pen"></i><span class="d-none d-md-inline">&nbsp;Edit</span></a>
-                                <span data-bs-toggle="modal" data-bs-target="#deleteDialog">
-                                    <a href="#" class="btn-sm btn-outline-secondary"
-                                       title="delete blog"><i class="bi-x"></i><span
+                                <!--                                <span data-bs-toggle="modal" data-bs-target="#deleteDialog">-->
+                                <a href="#" class="btn-sm btn-outline-secondary"
+                                   th:href="@{|/blog/${blog.blogId}/delete|}"
+                                   title="delete blog"><i class="bi-x"></i>
+                                    <span
                                             class="d-none d-md-inline">&nbsp;Delete</span>
-                                    </a>
-                                </span>
+                                </a>
+                                <!--                                </span>-->
                             </td>
                         </tr>
                         <tr th:remove="all">
