@@ -11,9 +11,12 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.util.List;
 
+@Repository
 public class BlogDAODtoJdbc implements BlogDtoDAO {
     public static final Logger LOGGER = LoggerFactory.getLogger(BlogDAOJdbc.class);
 
@@ -23,8 +26,8 @@ public class BlogDAODtoJdbc implements BlogDtoDAO {
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
-    BlogDAODtoJdbc(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    BlogDAODtoJdbc(DataSource dataSource) {
+        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
 

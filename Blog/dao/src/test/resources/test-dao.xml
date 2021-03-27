@@ -4,16 +4,16 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-        <constructor-arg ref="dataSource"/>
-    </bean>
+<!--    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">-->
+<!--        <constructor-arg ref="h2DataSource"/>-->
+<!--    </bean>-->
 
-    <bean id="BlogDAO" class="com.epam.learn.dao.jdbc.BlogDAOJdbc">
-        <constructor-arg ref="namedParameterJdbcTemplate"/>
-    </bean>
+<!--    <bean id="BlogDAO" class="com.epam.learn.dao.jdbc.BlogDAOJdbc">-->
+<!--        <constructor-arg ref="h2DataSource"/>-->
+<!--    </bean>-->
 
-    <bean id="BlogDtoDAO" class="com.epam.learn.dao.jdbc.BlogDAODtoJdbc">
-        <constructor-arg ref="namedParameterJdbcTemplate"/>
-    </bean>
+<!--    <bean id="BlogDtoDAO" class="com.epam.learn.dao.jdbc.BlogDAODtoJdbc">-->
+<!--        <constructor-arg ref="h2DataSource"/>-->
+<!--    </bean>-->
 
 </beans>

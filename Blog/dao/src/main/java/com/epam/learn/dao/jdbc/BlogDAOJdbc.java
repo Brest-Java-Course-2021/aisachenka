@@ -15,9 +15,12 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.util.*;
 
+@Repository
 public class BlogDAOJdbc implements BlogDAO {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(BlogDAOJdbc.class);
@@ -40,8 +43,8 @@ public class BlogDAOJdbc implements BlogDAO {
 
     RowMapper<Blog> rowMapper = BeanPropertyRowMapper.newInstance(Blog.class);
 
-    BlogDAOJdbc(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    BlogDAOJdbc(DataSource dataSource) {
+        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
     @Override

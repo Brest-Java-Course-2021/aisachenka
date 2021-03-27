@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="../../resources/static/css/bootstrap.css"
-          th:href="@{/resources/static/css/bootstrap.css}">
+          th:href="@{/css/bootstrap.css}">
     <link rel="stylesheet" href="../../resources/static/css/style.css"
-          th:href="@{/resources/static/css/style.css}">
+          th:href="@{/css/style.css}">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <title>Post Edit</title>
+    <title>Blog Add</title>
 </head>
 <body>
 
@@ -25,18 +25,18 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="blogs.html"
+                        <a class="nav-link active" href="blogs.html"
                            th:href="@{/blogs}">Blogs</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link active" href="posts.html"
+                        <a class="nav-link" href="posts.html"
                            th:href="@{/posts}">Posts</a>
                     </li>
 
                 </ul>
             </div>
-            <a href="posts.html" th:href="@{/posts.html}" type="button" class="btn-close btn-close-white" aria-label="Close"></a>
+            <a href="blogs.html" th:href="@{/blogs}" type="button" class="btn-close btn-close-white" aria-label="Close"></a>
 
         </div>
 
@@ -57,34 +57,34 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <form>
+                        <form id="blogAdd"
+                              th:action="@{${#httpServletRequest.servletPath}}"
+                              th:method="@{post}"
+                              th:object="${blog}"
+                              action="blogs.html"
+                              th:modelAttribute="blog">
+
+                            <input id="field_departmentId"
+                                   type="hidden"
+                                   th:field="*{blogId}"/>
+
+
                             <div class="mb-3">
                                 <label class="form-label"
-                                       for="field_postText">Text of Post</label>
+                                       for="blogName">Blog Name</label>
                                 <input class="form-control "
-                                       id="field_postText"
-                                       type="text" value="Пабло Эскобар тратил 300$ ежемесячно только на шикарную шляпу, чтобы та была как раз"/>
+                                       id="blogName"
+                                       th:field="*{blogName}"
+                                       type="text" value=""/>
                             </div>
-                            <div class="mb-3">
-                                <input class="form-control "
-                                       id="field_postDate"
-                                       type="date"/>
-                            </div>
-
-                            <div class="mb-3">
-                                <input class="form-control "
-                                       id="field_numberOfLikes"
-                                       value="666"
-                                       type="number"/>
-                            </div>
-
                             <div class="d-flex justify-content-end">
-                                <a href="posts.html"
-                                   th:href="@{/posts}"
+                                <a href="blogs.html"
+                                   th:href="@{/blogs}"
                                    class="btn btn-light me-1"
                                    title="Cancel">Cancel</a>
-                                <a href="posts.html"
+                                <a href="blogs.html"
                                    th:href="@{/blogs}"
+                                   th:onclick="@{document.forms['blogAdd'].submit(); return false;}"
                                    class="btn btn-primary"
                                    title="Save blog">Save</a>
                             </div>
@@ -102,6 +102,6 @@
 </footer>
 
 <script src="../../resources/static/js/bootstrap.bundle.min.js"
-        th:href="@{/resources/static/js/bootstrap.bundle.min.js}"></script>
+        th:href="@{/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>

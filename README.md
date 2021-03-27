@@ -16,14 +16,14 @@ cd Blog/
 mvn clean install
 ```
 
-## Local tests with Jetty Maven Plugin
+## Local tests with Spring Boot
 
-The [Jetty Maven plugin](https://www.eclipse.org/jetty/documentation/jetty-10/programming-guide/index.html#jetty-maven-plugin) is useful for development and nd local testing.
+The Spring Boot is useful for development and local testing.
 
-From the same directory as your root pom.xml, type:
+After building of application go to the web-app's or rest-app's target directory and execute 
 ```shell
-mvn jetty:run
+java -jar name_of_spring_boot_jar_file.jar
 ```
 
-This starts Jetty and serves up your project on [http://localhost:8080](http://localhost:8080).
+This starts Spring boot and serves up your project on [http://localhost:8080](http://localhost:8080).
 

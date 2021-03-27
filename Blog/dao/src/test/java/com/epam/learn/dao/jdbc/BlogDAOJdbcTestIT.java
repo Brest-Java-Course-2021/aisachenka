@@ -1,28 +1,34 @@
 package com.epam.learn.dao.jdbc;
 
 import com.epam.learn.dao.BlogDAO;
+import com.epam.learn.dao.BlogDtoDAO;
 import com.epam.learn.model.Blog;
 
+import com.epam.learn.model.dto.BlogDTO;
+import com.epam.learn.testdb.SpringJdbcConfig;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
+import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = {"classpath*:test-db.xml", "classpath*:test-dao.xml", "classpath*:dao.xml"})
+@DataJdbcTest
+@Import({BlogDAOJdbc.class,BlogDAODtoJdbc.class})
+@PropertySource({"classpath:dao.properties"})
+@ContextConfiguration(classes = SpringJdbcConfig.class)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class BlogDAOJdbcTestIT {
 
     @Autowired
     BlogDAO blogDAO;
+
+    @Autowired
+    BlogDtoDAO blogDtoDAO;
 
     @Test
     public void findAll() {
@@ -170,7 +176,7 @@ public class BlogDAOJdbcTestIT {
         assertEquals(blogsAfterAdding.size(), blogs.size() + 1);
 
 
-        Integer deletedCount = blogDAO.delete(4);
+        Integer deletedCount = blogDAO.delete(3);
         List<Blog> blogsAfterDeleting = blogDAO.findAll();
         assertEquals(blogsAfterAdding.size(), blogsAfterDeleting.size() + 1);
         assertTrue(deletedCount == 1);

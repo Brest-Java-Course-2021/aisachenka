@@ -6,13 +6,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice
 public class ControllerAdvisor {
-    @ExceptionHandler(RuntimeException.class)
-    public ModelAndView handle(Exception ex) {
-
-        ModelAndView mv = new ModelAndView();
-        mv.addObject("message", ex.getMessage());
-        mv.setViewName("error");
-
-        return mv;
-    }
+//`    @ExceptionHandler(RuntimeException.class)
+//    public ModelAndView handle(Exception ex) {
+//
+//        ModelAndView mv = new ModelAndView();
+//        mv.addObject("message", ex.getMessage());
+//        mv.setViewName("error");
+//
+//        return mv;
+//    }`
 }
