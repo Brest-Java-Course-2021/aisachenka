@@ -25,5 +25,5 @@ After building of application go to the web-app's or rest-app's target directory
 java -jar name_of_spring_boot_jar_file.jar
 ```
 
-This starts Spring boot and serves up your project on [http://localhost:8080](http://localhost:8080).
+This starts Spring boot and serves up your project on [http://localhost:8080](http://localhost:8080) and [http://localhost:8090](http://localhost:8090).
 
