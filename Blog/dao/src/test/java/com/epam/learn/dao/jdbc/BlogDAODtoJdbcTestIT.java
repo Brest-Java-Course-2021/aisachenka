@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -30,11 +32,14 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class BlogDAODtoJdbcTestIT {
 
+    public static final Logger LOGGER = LoggerFactory.getLogger(BlogDAODtoJdbcTestIT.class);
+
     @Autowired
     BlogDtoDAO blogDtoDAO;
 
     @Test
     public void getAllBlogsWithMaxLikesTest(){
+        LOGGER.debug("getAllBlogsWithMaxLikesTest()");
         List<BlogDTO> allBlogsWithMaxLikes = blogDtoDAO.getAllBlogsWithMaxLikes();
         assertTrue(allBlogsWithMaxLikes.get(1).getBlogId()==2);
         assertTrue(allBlogsWithMaxLikes.get(1).getMaxNumberOfLikes()==4454);

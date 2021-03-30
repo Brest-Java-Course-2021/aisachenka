@@ -2,7 +2,6 @@ package com.epam.learn.service.rest_app;
 
 import com.epam.learn.model.Blog;
 import com.epam.learn.service.BlogService;
-import com.epam.learn.service.rest_app.exception.BlogNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +31,13 @@ public class BlogsController {
     }
 
     @GetMapping("/blogs/{id}")
-    public Blog getBlogById(@PathVariable Integer id) {
+    public ResponseEntity<Blog> getBlogById(@PathVariable Integer id) {
         LOGGER.debug("getBlogById() {}", id);
-        return blogService.findById(id).orElseThrow(() -> new BlogNotFoundException(id));
+        Optional<Blog> optionalBlog = blogService.findById(id);
+        return optionalBlog.isPresent()
+                ? new ResponseEntity<>(optionalBlog.get(), HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
     }
 
 
@@ -54,12 +57,11 @@ public class BlogsController {
     @DeleteMapping(value = "/blogs/{id}")
     public ResponseEntity<Integer>  deleteBlogById(@PathVariable Integer id) {
         LOGGER.debug("deleteBlogById() {}", id);
-//        try{
-            return new ResponseEntity<>(blogService.delete(id), HttpStatus.OK) ;
-//        }catch (org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException e){
-//            throw new
-//        }
-//        return blogService.delete(id);
+        Integer numberOfDeletedBlogs = blogService.delete(id);
+
+        return numberOfDeletedBlogs > 0
+                ? new ResponseEntity<>(numberOfDeletedBlogs, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 

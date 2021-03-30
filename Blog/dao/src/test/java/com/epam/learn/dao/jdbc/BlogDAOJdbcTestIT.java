@@ -7,6 +7,8 @@ import com.epam.learn.model.Blog;
 import com.epam.learn.model.dto.BlogDTO;
 import com.epam.learn.testdb.SpringJdbcConfig;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
@@ -24,6 +26,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class BlogDAOJdbcTestIT {
 
+    public static final Logger LOGGER = LoggerFactory.getLogger(BlogDAOJdbcTestIT.class);
+
     @Autowired
     BlogDAO blogDAO;
 
@@ -32,6 +36,7 @@ public class BlogDAOJdbcTestIT {
 
     @Test
     public void findAll() {
+        LOGGER.debug("findAll()");
         List<Blog> blogs = blogDAO.findAll();
         assertNotNull(blogs);
         assertTrue(blogs.size() > 0);
@@ -47,6 +52,7 @@ public class BlogDAOJdbcTestIT {
 
     @Test
     public void findById() {
+        LOGGER.debug("findById()");
         List<Blog> blogs = blogDAO.findAll();
         assertNotNull(blogs);
         assertTrue(blogs.size() > 0);
@@ -67,11 +73,13 @@ public class BlogDAOJdbcTestIT {
 
     @Test
     public void findByIdExeptionalTest() {
+        LOGGER.debug("findByIdExeptionalTest()");
         assertFalse(blogDAO.findById(999).isPresent());
     }
 
     @Test
     public void create() {
+        LOGGER.debug("create()");
         List<Blog> blogs = blogDAO.findAll();
         assertNotNull(blogs);
         assertTrue(blogs.size() > 0);
@@ -89,6 +97,7 @@ public class BlogDAOJdbcTestIT {
 
     @Test
     public void createBlogWithSameName() {
+        LOGGER.debug("createBlogWithSameName()");
         List<Blog> blogs = blogDAO.findAll();
         assertNotNull(blogs);
         assertTrue(blogs.size() > 0);
@@ -107,6 +116,7 @@ public class BlogDAOJdbcTestIT {
 
     @Test
     public void createBlogWithSameNameDifferentCase() {
+        LOGGER.debug("createBlogWithSameNameDifferentCase()");
         List<Blog> blogs = blogDAO.findAll();
         assertNotNull(blogs);
         assertTrue(blogs.size() > 0);
@@ -124,6 +134,7 @@ public class BlogDAOJdbcTestIT {
 
     @Test
     public void update() {
+        LOGGER.debug("update()");
         List<Blog> blogs = blogDAO.findAll();
         assertNotNull(blogs);
         assertTrue(blogs.size() > 0);
@@ -143,6 +154,7 @@ public class BlogDAOJdbcTestIT {
 
     @Test
     public void updateWithTheSameNameAsExists() {
+        LOGGER.debug("updateWithTheSameNameAsExists()");
         List<Blog> blogs = blogDAO.findAll();
         assertNotNull(blogs);
         assertTrue(blogs.size() > 0);
@@ -162,6 +174,7 @@ public class BlogDAOJdbcTestIT {
 
     @Test
     public void delete() {
+        LOGGER.debug("delete()");
         List<Blog> blogs = blogDAO.findAll();
         assertNotNull(blogs);
         assertTrue(blogs.size() > 0);
