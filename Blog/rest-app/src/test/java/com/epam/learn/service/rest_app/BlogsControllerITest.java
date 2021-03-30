@@ -182,11 +182,9 @@ class BlogsControllerITest {
     @Test
     void shouldReturnUnprocessableEntityAndErrorMessageWhenWeCreateWithRepeatableValues() throws Exception {
         LOGGER.debug("shouldReturnUnprocessableEntityAndErrorMessage()");
-        Blog blogWithOriginalName = blogService.findById(1).get();
-        Blog blogThatRepeatsName = blogService.findById(2).get();
-        blogThatRepeatsName.setBlogName(blogWithOriginalName.getBlogName());
+        blogService.create(new Blog("Blog"));
 
-        String json = objectMapper.writeValueAsString(blogThatRepeatsName);
+        String json = objectMapper.writeValueAsString(new Blog("Blog"));
         MockHttpServletResponse response = mockMvc.perform(post(BLOGS_ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
@@ -218,12 +216,42 @@ class BlogsControllerITest {
     }
 
 
-//    @Test
-//    public void createDepartmentWithSameNameDiffCaseTest() throws Exception {
-//
-//    }
+    @Test
+    public void createDepartmentWithSameNameDiffCaseTest() throws Exception {
+        LOGGER.debug("createDepartmentWithSameNameDiffCaseTest()");
 
+        blogService.create(new Blog("dog"));
+        Blog blog = new Blog("Dog");
+        String json = objectMapper.writeValueAsString(blog);
 
+        MockHttpServletResponse response = mockMvc.perform(post(BLOGS_ENDPOINT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnprocessableEntity())
+                .andReturn().getResponse();
+
+        assertNotNull(response);
+    }
+
+    @Test
+    public void updateDepartmentWithSameNameDiffCaseTest() throws Exception {
+        LOGGER.debug("createDepartmentWithSameNameDiffCaseTest()");
+
+        blogService.create(new Blog("dog"));
+        Blog blog = new Blog("Dog");
+        blog.setBlogId(3);
+        String json = objectMapper.writeValueAsString(blog);
+
+        MockHttpServletResponse response = mockMvc.perform(put(BLOGS_ENDPOINT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnprocessableEntity())
+                .andReturn().getResponse();
+
+        assertNotNull(response);
+    }
 
     private class MockBlogService{
 
