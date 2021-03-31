@@ -41,6 +41,7 @@
 
     <module>web-app</module>
     <module>rest-app</module>
+    <module>service-rest</module>
   </modules>
 
   <dependencyManagement>
@@ -94,6 +95,12 @@
       <dependency>
         <groupId>com.epam.brest</groupId>
         <artifactId>service</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.epam.brest</groupId>
+        <artifactId>service-rest</artifactId>
         <version>${project.version}</version>
       </dependency>
 

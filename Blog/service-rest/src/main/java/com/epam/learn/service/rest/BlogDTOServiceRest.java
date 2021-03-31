@@ -1,0 +1,35 @@
+package com.epam.learn.service.rest;
+
+import com.epam.learn.model.dto.BlogDTO;
+import com.epam.learn.service.BlogDtoService;
+import com.epam.learn.service.BlogService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
+
+public class BlogDTOServiceRest implements BlogDtoService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BlogDTOServiceRest.class);
+
+    private String url;
+
+    private RestTemplate restTemplate;
+
+    @Autowired
+    public BlogDTOServiceRest(String url, RestTemplate restTemplate) {
+        this.url = url;
+        this.restTemplate = restTemplate;
+    }
+
+    @Override
+    public List<BlogDTO> getAllBlogsWithMaxLikes() {
+        LOGGER.debug("getAllBlogsWithMaxLikes()");
+        ResponseEntity responseEntity = restTemplate.getForEntity(url,List.class);
+        return (List<BlogDTO>) responseEntity.getBody();
+    }
+}

@@ -65,30 +65,15 @@
 
         <dependency>
             <groupId>com.epam.learn</groupId>
-            <artifactId>dao-api</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.epam.learn</groupId>
-            <artifactId>dao</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.epam.learn</groupId>
             <artifactId>service-api</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>com.epam.learn</groupId>
-            <artifactId>service</artifactId>
+            <artifactId>service-rest</artifactId>
             <version>1.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.epam.learn</groupId>
-            <artifactId>test-database</artifactId>
-            <version>1.0</version>
-        </dependency>
 
 <!--        Testing-->
 

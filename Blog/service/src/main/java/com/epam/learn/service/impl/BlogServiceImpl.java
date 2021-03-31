@@ -4,8 +4,8 @@ import com.epam.learn.dao.BlogDAO;
 import com.epam.learn.model.Blog;
 import com.epam.learn.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;

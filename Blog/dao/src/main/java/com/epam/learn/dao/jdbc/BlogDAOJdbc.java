@@ -1,8 +1,8 @@
 package com.epam.learn.dao.jdbc;
 
 
-import com.epam.learn.model.Blog;
 import com.epam.learn.dao.BlogDAO;
+import com.epam.learn.model.Blog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +14,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
