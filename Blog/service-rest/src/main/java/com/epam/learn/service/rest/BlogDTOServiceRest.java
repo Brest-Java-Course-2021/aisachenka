@@ -6,11 +6,15 @@ import com.epam.learn.service.BlogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+
+import static org.springframework.http.HttpMethod.GET;
+
 
 public class BlogDTOServiceRest implements BlogDtoService {
 
@@ -29,7 +33,6 @@ public class BlogDTOServiceRest implements BlogDtoService {
     @Override
     public List<BlogDTO> getAllBlogsWithMaxLikes() {
         LOGGER.debug("getAllBlogsWithMaxLikes()");
-        ResponseEntity responseEntity = restTemplate.getForEntity(url,List.class);
-        return (List<BlogDTO>) responseEntity.getBody();
+        return restTemplate.exchange(url, GET, null, new ParameterizedTypeReference<List<BlogDTO>>() {}).getBody();
     }
 }

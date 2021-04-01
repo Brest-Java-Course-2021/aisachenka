@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,13 +43,13 @@ public class BlogsController {
 
 
     @PostMapping(value = "/blogs",consumes = {"application/json"},produces = {"application/json"})
-    public ResponseEntity<Integer> createBlog(@RequestBody Blog blog){
+    public ResponseEntity<Integer> createBlog(@Valid @RequestBody Blog blog){
         LOGGER.debug("createBlog() {}", blog);
         return new ResponseEntity<>(blogService.create(blog), HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/blogs",consumes = {"application/json"},produces = {"application/json"})
-    public ResponseEntity<Integer> updateBlog(@RequestBody Blog blog){
+    public ResponseEntity<Integer> updateBlog(@Valid @RequestBody Blog blog){
         LOGGER.debug("updateBlog() {}", blog);
         return new ResponseEntity<>(blogService.update(blog), HttpStatus.OK);
     }

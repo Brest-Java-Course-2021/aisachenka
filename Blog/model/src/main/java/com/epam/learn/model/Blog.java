@@ -1,9 +1,15 @@
 package com.epam.learn.model;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class Blog {
+
     private Integer blogId;
+
+    @NotBlank(message = "name is mandatory")
+    @Size(min = 2, message = "Blog name should be b-n 2 and 50 characters",max = 50)
     private String blogName;
 
     public Blog(String blogName){
