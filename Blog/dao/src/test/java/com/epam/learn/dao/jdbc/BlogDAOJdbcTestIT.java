@@ -2,6 +2,7 @@ package com.epam.learn.dao.jdbc;
 
 import com.epam.learn.dao.BlogDAO;
 import com.epam.learn.dao.BlogDtoDAO;
+import com.epam.learn.dao.jdbc.exeption.ConstraintException;
 import com.epam.learn.model.Blog;
 import com.epam.learn.testdb.SpringJdbcConfig;
 import org.junit.jupiter.api.Test;
@@ -192,6 +193,16 @@ public class BlogDAOJdbcTestIT {
         List<Blog> blogsAfterDeleting = blogDAO.findAll();
         assertEquals(blogsAfterAdding.size(), blogsAfterDeleting.size() + 1);
         assertTrue(deletedCount == 1);
+
+    }
+
+    @Test
+    void shouldThrowExeptionOnDeleteOfConstrainedField(){
+        LOGGER.debug("shouldThrowExeptionOnDeleteOfConstrainedField()");
+        assertThrows(ConstraintException.class,()-> {
+           blogDAO.delete(1);
+        });
+
 
     }
 

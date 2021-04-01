@@ -1,17 +1,19 @@
 package com.epam.learn.service.rest_app.exception;
 
+import java.util.List;
+
 public class ErrorResponse {
-    private String message;
+    private List<String> errors;
 
-    public ErrorResponse(String message) {
-        this.message = message;
+    public ErrorResponse(List<String> errors) {
+        this.errors = errors;
     }
 
-    public String getMessage() {
-        return message;
+    public List<String> getErrors() {
+        return errors;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setErrors(List<String> errors) {
+        this.errors = errors;
     }
 }

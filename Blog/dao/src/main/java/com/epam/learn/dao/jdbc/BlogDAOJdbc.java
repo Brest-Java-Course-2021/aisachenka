@@ -2,10 +2,12 @@ package com.epam.learn.dao.jdbc;
 
 
 import com.epam.learn.dao.BlogDAO;
+import com.epam.learn.dao.jdbc.exeption.ConstraintException;
 import com.epam.learn.model.Blog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -17,6 +19,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.*;
 
 @Repository
@@ -98,6 +101,14 @@ public class BlogDAOJdbc implements BlogDAO {
     public Integer delete(Integer blogId) {
         LOGGER.debug("Delete blog by id {}", blogId);
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("BLOG_ID", blogId);
-        return namedParameterJdbcTemplate.update(SQL_DELETE_BLOG_QUERY,sqlParameterSource);
+        Integer update;
+        try {
+            update = namedParameterJdbcTemplate.update(SQL_DELETE_BLOG_QUERY, sqlParameterSource);
+        }catch (DataAccessException exception){
+            LOGGER.warn("Can't delete Blog because it has dependencies id={} ",blogId);
+            throw new ConstraintException("Can't delete Blog because it has dependencies");
+        }
+
+        return update;
     }
 }
