@@ -1,5 +1,6 @@
 package com.epam.learn.service.rest_app.exception;
 
+import com.epam.learn.dao.jdbc.exeption.ConstraintException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,23 +24,17 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Object> handleIllegalArgument(){
-
-        Map<String, Object> body = new LinkedHashMap<>();
-
         List<String> errors = List.of("Blog with this name already exists");
-
-        body.put("errors", errors);
 
         LOGGER.warn("handleIllegalArgument() {}",errors);
 
-        return new ResponseEntity<>(body, HttpStatus.UNPROCESSABLE_ENTITY);
+        return new ResponseEntity<>(new ErrorResponse(errors), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers,
                                                                   HttpStatus status, WebRequest request) {
-
         Map<String, Object> body = new LinkedHashMap<>();
 
         //Get all errors
@@ -49,14 +43,17 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                 .stream()
                 .map(x -> x.getDefaultMessage())
                 .collect(Collectors.toList());
-
-
         LOGGER.warn("handleIllegalArgument() {}",errors);
-        body.put("errors", errors);
-
-        return new ResponseEntity<>(body, headers, status);
+        return new ResponseEntity<>(new ErrorResponse(errors), headers, status);
 
     }
 
+
+    @ExceptionHandler(ConstraintException.class)
+    public ResponseEntity<Object> handleConstraint(){
+        List<String> errors = List.of("Can't delete Blog because it has dependencies");
+        LOGGER.warn("handleIllegalArgument() {}",errors);
+        return new ResponseEntity<>(new ErrorResponse(errors), HttpStatus.FORBIDDEN);
+    }
 
 }

@@ -134,7 +134,6 @@ class BlogsControllerITest {
         blog.setBlogName("хахахаха");
         blogService.update(blog);
         assertNotNull(blogService.findById(blogId));
-//        do not work with languages except english
         String receivedBlogName = blogService.findById(blogId).get().getBlogName();
         assertEquals("хахахаха", receivedBlogName);
     }
