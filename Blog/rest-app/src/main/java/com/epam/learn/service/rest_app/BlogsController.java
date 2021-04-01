@@ -51,7 +51,11 @@ public class BlogsController {
     @PutMapping(value = "/blogs",consumes = {"application/json"},produces = {"application/json"})
     public ResponseEntity<Integer> updateBlog(@Valid @RequestBody Blog blog){
         LOGGER.debug("updateBlog() {}", blog);
-        return new ResponseEntity<>(blogService.update(blog), HttpStatus.OK);
+        Integer count = blogService.update(blog);
+        return count > 0
+                ? new ResponseEntity<>(count, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
     }
 
 

@@ -1,13 +1,12 @@
 package com.epam.learn.service.rest_app;
 
-import com.epam.learn.dao.BlogDAO;
 import com.epam.learn.model.Blog;
 import com.epam.learn.service.rest_app.exception.ControllerAdvisor;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -34,7 +32,6 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 
 
 @SpringBootTest
-@ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
 @Transactional
 class BlogsControllerITest {
@@ -130,12 +127,13 @@ class BlogsControllerITest {
         }
 
         Blog blog = blogs.get(0);
+        String name = RandomStringUtils.randomAlphabetic(50);
         Integer blogId = blog.getBlogId();
-        blog.setBlogName("хахахаха");
+        blog.setBlogName(name);
         blogService.update(blog);
         assertNotNull(blogService.findById(blogId));
         String receivedBlogName = blogService.findById(blogId).get().getBlogName();
-        assertEquals("хахахаха", receivedBlogName);
+        assertEquals(name, receivedBlogName);
     }
 
     @Test
@@ -159,6 +157,8 @@ class BlogsControllerITest {
         assertTrue(deletedCount == 1);
 
     }
+
+
 
     @Test
     void shouldReturnUnprocessableEntityAndErrorMessageWhenWeUpdateWithRepeatableValues() throws Exception {
