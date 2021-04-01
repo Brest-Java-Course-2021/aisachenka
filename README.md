@@ -8,12 +8,12 @@ This is sample 'Blogs and Posts' web application.
 ## Requirements
 
 - JDK 11
-- Apache Maven
+- Apache Maven 3.x
 
 ## Build application:
 ```shell
 cd Blog/
-mvn clean install
+mvn clean package
 ```
 
 ## Local tests with Spring Boot
@@ -21,9 +21,13 @@ mvn clean install
 The Spring Boot is useful for development and local testing.
 
 After building of application go to the web-app's or rest-app's target directory and execute 
+for rest-app
 ```shell
-java -jar name_of_spring_boot_jar_file.jar
+java -jar rest-app/target/rest-app-1.0.jar
 ```
-
-This starts Spring boot and serves up your project on [http://localhost:8080](http://localhost:8080) and [http://localhost:8090](http://localhost:8090).
+And for web-app
+```shell
+java -jar web-app/target/web-app-1.0.jar
+```
+This starts Spring boot Web application and Rest application serves up your project on [http://localhost:8080](http://localhost:8080) and [http://localhost:8090](http://localhost:8090) respectively.
 
