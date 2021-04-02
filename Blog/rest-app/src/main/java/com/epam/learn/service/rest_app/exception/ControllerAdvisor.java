@@ -3,6 +3,7 @@ package com.epam.learn.service.rest_app.exception;
 import com.epam.learn.dao.jdbc.exeption.ConstraintException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +42,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         List<String> errors = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
-                .map(x -> x.getDefaultMessage())
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.toList());
         LOGGER.warn("handleIllegalArgument() {}",errors);
         return new ResponseEntity<>(new ErrorResponse(errors), headers, status);

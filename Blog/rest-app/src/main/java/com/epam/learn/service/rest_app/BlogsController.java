@@ -33,12 +33,12 @@ public class BlogsController {
     }
 
     @GetMapping("/blogs/{id}")
-    public ResponseEntity<Blog> getBlogById(@PathVariable Integer id) {
+    public ResponseEntity<Object> getBlogById(@PathVariable Integer id) {
         LOGGER.debug("getBlogById() {}", id);
         Optional<Blog> optionalBlog = blogService.findById(id);
         return optionalBlog.isPresent()
                 ? new ResponseEntity<>(optionalBlog.get(), HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                : new ResponseEntity<>(new ErrorResponse(List.of("Can't find Blog with such id")) ,HttpStatus.NOT_FOUND);
 
     }
 
