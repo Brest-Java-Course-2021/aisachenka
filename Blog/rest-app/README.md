@@ -1,5 +1,5 @@
 # REST ENDPOINTS
-##### Here it would be shown with help [HTTPie](https://httpie.io/), curl for humans
+##### Here it would be shown with help of [HTTPie](https://httpie.io/), curl for humans
 [Docs for HTTPie](https://httpie.io/docs)
 
 ### Show all blogs DTO
