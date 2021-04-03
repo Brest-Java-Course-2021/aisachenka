@@ -38,13 +38,9 @@ public class BlogsController {
     public String getFormOfEditBlog(@PathVariable Integer id, Model model){
         LOGGER.debug("getFormOfEditBlog() {} {}", id, model);
         Optional<Blog> optionalBlog = blogService.findById(id);
-        if(optionalBlog.isPresent()){
-            model.addAttribute("blog",optionalBlog.get());
-            return "blog";
-        }
-        LOGGER.warn("getFormOfEditBlog() such id doesn't exist exception {} {}", id, model);
-        throw new IllegalArgumentException("Such id doesn't exists");
-        //return "redirect:/error";
+        model.addAttribute("blog",optionalBlog.get());
+        return "blog";
+
     }
 
     @GetMapping(value = "blog/add")
