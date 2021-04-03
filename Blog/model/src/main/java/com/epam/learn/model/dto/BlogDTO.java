@@ -6,6 +6,11 @@ public class BlogDTO {
     private Integer maxNumberOfLikes;
 
 
+    public BlogDTO(Integer blogId, String blogName, Integer maxNumberOfLikes) {
+        this.blogId = blogId;
+        this.blogName = blogName;
+        this.maxNumberOfLikes = maxNumberOfLikes;
+    }
 
     public BlogDTO() {}
 
