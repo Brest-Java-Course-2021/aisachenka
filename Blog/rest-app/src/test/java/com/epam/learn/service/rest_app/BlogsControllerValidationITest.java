@@ -2,8 +2,6 @@ package com.epam.learn.service.rest_app;
 
 import com.epam.learn.model.Blog;
 import com.epam.learn.service.rest_app.exception.ControllerAdvisor;
-import com.epam.learn.service.rest_app.exception.ErrorResponse;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,18 +14,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
@@ -63,121 +57,112 @@ public class BlogsControllerValidationITest {
 
     @Test
     void shouldReturnErrorWhenDeleteConstrainedField() throws Exception{
+        LOGGER.debug("shouldReturnErrorWhenDeleteConstrainedField()");
         Integer id = 1;
-        MockHttpServletResponse response = mockMvc.perform(delete(BLOGS_ENDPOINT + "/" + id)
+        mockMvc.perform(delete(BLOGS_ENDPOINT + "/" + id)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden())
-                .andReturn().getResponse();
-
-        ErrorResponse errorResponse = mapper.readValue(response.getContentAsString(), new TypeReference<ErrorResponse>() {
-        });
-
-        assertNotNull(errorResponse);
-        assertEquals(errorResponse.getErrors().get(0),"Can't delete Blog because it has dependencies");
+                .andExpect(jsonPath("$.errors").isArray())
+                .andExpect(jsonPath("$.errors", hasSize(1)))
+                .andExpect(jsonPath("$.errors", hasItem("Can't delete Blog because it has dependencies")));
     }
 
     @Test
     void shouldReturnErrorWhenUpdateWithTooLongValue() throws Exception{
-
+        LOGGER.debug("shouldReturnErrorWhenUpdateWithTooLongValue()");
         Blog blog = new Blog();
         blog.setBlogName(RandomStringUtils.randomAlphabetic(53));
         blog.setBlogId(1);
-        MockHttpServletResponse response = mockMvc.perform(put(BLOGS_ENDPOINT)
+        mockMvc.perform(put(BLOGS_ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(blog))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
-                .andReturn().getResponse();
-
-        ErrorResponse errorResponse = mapper.readValue(response.getContentAsString(), new TypeReference<ErrorResponse>() {
-        });
-
-        assertNotNull(errorResponse);
-        assertEquals(errorResponse.getErrors().get(0),"Blog name should be b-n 2 and 50 characters");
+                .andExpect(jsonPath("$.errors").isArray())
+                .andExpect(jsonPath("$.errors", hasSize(1)))
+                .andExpect(jsonPath("$.errors", hasItem("Blog name should be b-n 2 and 50 characters")));
     }
 
     @Test
     void shouldReturnErrorWhenUpdateWithBlankValue() throws Exception{
+        LOGGER.debug("shouldReturnErrorWhenUpdateWithBlankValue()");
         Blog blog = new Blog();
         blog.setBlogName("");
         blog.setBlogId(1);
-        MockHttpServletResponse response = mockMvc.perform(put(BLOGS_ENDPOINT)
+        mockMvc.perform(put(BLOGS_ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(blog))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
-                .andReturn().getResponse();
-
-        ErrorResponse errorResponse = mapper.readValue(response.getContentAsString(), new TypeReference<ErrorResponse>() {
-        });
-
-        assertNotNull(errorResponse);
-        assertEquals(errorResponse.getErrors().stream().sorted(Comparator.naturalOrder()).collect(Collectors.toList()),
-                List.of(
-                        "Blog name is mandatory",
-                        "Blog name should be b-n 2 and 50 characters")
-        );
+                .andExpect(jsonPath("$.errors").isArray())
+                .andExpect(jsonPath("$.errors",hasSize(2)))
+                .andExpect(jsonPath("$.errors",hasItem("Blog name is mandatory")))
+                .andExpect(jsonPath("$.errors",hasItem("Blog name should be b-n 2 and 50 characters")));
     }
 
 
     @Test
     void shouldReturnErrorWhenCreateWithTooLongValue() throws Exception{
-
+        LOGGER.debug("shouldReturnErrorWhenCreateWithTooLongValue()");
         Blog blog = new Blog();
         blog.setBlogName(RandomStringUtils.randomAlphabetic(53));
         blog.setBlogId(1);
-        MockHttpServletResponse response = mockMvc.perform(post(BLOGS_ENDPOINT)
+        mockMvc.perform(post(BLOGS_ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(blog))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
-                .andReturn().getResponse();
+                .andExpect(jsonPath("$.errors").isArray())
+                .andExpect(jsonPath("$.errors",hasSize(1)))
+                .andExpect(jsonPath("$.errors",hasItem("Blog name should be b-n 2 and 50 characters")));
 
-        ErrorResponse errorResponse = mapper.readValue(response.getContentAsString(), new TypeReference<ErrorResponse>() {
-        });
-
-        assertNotNull(errorResponse);
-        assertEquals(errorResponse.getErrors().get(0),"Blog name should be b-n 2 and 50 characters");
     }
     @Test
     void shouldReturnErrorWhenCreateWithBlankValue() throws Exception{
-
+        LOGGER.debug("shouldReturnErrorWhenCreateWithBlankValue()");
         Blog blog = new Blog();
         blog.setBlogName("");
         blog.setBlogId(1);
-        MockHttpServletResponse response = mockMvc.perform(post(BLOGS_ENDPOINT)
+        mockMvc.perform(post(BLOGS_ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(blog))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
-                .andReturn().getResponse();
+                .andExpect(jsonPath("$.errors").isArray())
+                .andExpect(jsonPath("$.errors",hasSize(2)))
+                .andExpect(jsonPath("$.errors",hasItem("Blog name is mandatory")))
+                .andExpect(jsonPath("$.errors",hasItem("Blog name should be b-n 2 and 50 characters")));
 
-        ErrorResponse errorResponse = mapper.readValue(response.getContentAsString(), new TypeReference<ErrorResponse>() {
-        });
-
-        assertNotNull(errorResponse);
-        assertEquals(errorResponse.getErrors().stream().sorted(Comparator.naturalOrder()).collect(Collectors.toList()),
-                List.of(
-                        "Blog name is mandatory",
-                        "Blog name should be b-n 2 and 50 characters")
-        );
     }
 
     @Test
     void shouldReturnErrorWhenUpdateWithNonexistentId() throws Exception{
-
+        LOGGER.debug("shouldReturnErrorWhenUpdateWithNonexistentId()");
         Blog blog = new Blog();
         blog.setBlogName(RandomStringUtils.randomAlphabetic(50));
         blog.setBlogId(99999);
-        MockHttpServletResponse response = mockMvc.perform(put(BLOGS_ENDPOINT)
+        mockMvc.perform(put(BLOGS_ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(blog))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
-                .andReturn().getResponse();
+                .andExpect(jsonPath("$.errors").isArray())
+                .andExpect(jsonPath("$.errors", hasSize(1)))
+                .andExpect(jsonPath("$.errors", hasItem("Can't update Blog with such id")));
+    }
 
-        assertNotNull(response);
+    @Test
+    void shouldReturnErrorWhenDeleteWithNonexistentId() throws Exception{
+        LOGGER.debug("shouldReturnErrorWhenDeleteWithNonexistentId()");
+        Integer id = 99999;
+        mockMvc.perform(delete(BLOGS_ENDPOINT+"/"+id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.errors").isArray())
+                .andExpect(jsonPath("$.errors", hasSize(1)))
+                .andExpect(jsonPath("$.errors", hasItem("Can't delete Blog with such id")));
     }
 
 

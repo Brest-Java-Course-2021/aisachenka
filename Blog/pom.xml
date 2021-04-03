@@ -27,6 +27,7 @@
     <project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
     <junit.utReportFolder>${project.testresult.directory}/test</junit.utReportFolder>
     <junit.itReportFolder>${project.testresult.directory}/integrationTest</junit.itReportFolder>
+    <json.path.version>2.5.0</json.path.version>
   </properties>
 
 
@@ -232,6 +233,12 @@
         <version>${commons.lang.version}</version>
       </dependency>
 
+      <!-- https://mvnrepository.com/artifact/com.jayway.jsonpath/json-path -->
+      <dependency>
+        <groupId>com.jayway.jsonpath</groupId>
+        <artifactId>json-path</artifactId>
+        <version>${json.path.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
