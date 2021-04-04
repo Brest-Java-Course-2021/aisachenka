@@ -1,7 +1,7 @@
 package com.epam.learn.dao.jdbc;
 
 
-import com.epam.learn.dao.BlogDAO;
+import com.epam.learn.dao.blog.BlogDAO;
 import com.epam.learn.dao.jdbc.exeption.ConstraintException;
 import com.epam.learn.model.Blog;
 import org.slf4j.Logger;

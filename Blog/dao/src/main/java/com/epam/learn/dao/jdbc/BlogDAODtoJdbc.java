@@ -1,6 +1,6 @@
 package com.epam.learn.dao.jdbc;
 
-import com.epam.learn.dao.BlogDtoDAO;
+import com.epam.learn.dao.blog.BlogDtoDAO;
 import com.epam.learn.model.dto.BlogDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

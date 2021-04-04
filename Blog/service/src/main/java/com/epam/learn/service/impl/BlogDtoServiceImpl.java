@@ -1,6 +1,6 @@
 package com.epam.learn.service.impl;
 
-import com.epam.learn.dao.BlogDtoDAO;
+import com.epam.learn.dao.blog.BlogDtoDAO;
 import com.epam.learn.model.dto.BlogDTO;
 import com.epam.learn.service.BlogDtoService;
 import org.springframework.beans.factory.annotation.Autowired;
