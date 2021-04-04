@@ -2,6 +2,8 @@ package com.epam.learn.dao.jdbc;
 
 import com.epam.learn.dao.blog.BlogDAO;
 import com.epam.learn.dao.blog.BlogDtoDAO;
+import com.epam.learn.dao.jdbc.blog.BlogDAODtoJdbc;
+import com.epam.learn.dao.jdbc.blog.BlogDAOJdbc;
 import com.epam.learn.dao.jdbc.exeption.ConstraintException;
 import com.epam.learn.model.Blog;
 import com.epam.learn.testdb.SpringJdbcConfig;
@@ -20,7 +22,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJdbcTest
-@Import({BlogDAOJdbc.class,BlogDAODtoJdbc.class})
+@Import({BlogDAOJdbc.class, BlogDAODtoJdbc.class})
 @PropertySource({"classpath:dao.properties"})
 @ContextConfiguration(classes = SpringJdbcConfig.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)

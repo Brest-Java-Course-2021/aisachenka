@@ -1,6 +1,7 @@
 package com.epam.learn.dao.jdbc;
 
 import com.epam.learn.dao.blog.BlogDtoDAO;
+import com.epam.learn.dao.jdbc.blog.BlogDAODtoJdbc;
 import com.epam.learn.model.dto.BlogDTO;
 import com.epam.learn.testdb.SpringJdbcConfig;
 import org.junit.jupiter.api.Test;

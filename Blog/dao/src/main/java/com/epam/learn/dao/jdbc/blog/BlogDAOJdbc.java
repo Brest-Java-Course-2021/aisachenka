@@ -1,4 +1,4 @@
-package com.epam.learn.dao.jdbc;
+package com.epam.learn.dao.jdbc.blog;
 
 
 import com.epam.learn.dao.blog.BlogDAO;
