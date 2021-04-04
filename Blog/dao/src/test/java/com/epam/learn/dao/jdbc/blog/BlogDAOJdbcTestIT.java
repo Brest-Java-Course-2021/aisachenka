@@ -1,9 +1,7 @@
-package com.epam.learn.dao.jdbc;
+package com.epam.learn.dao.jdbc.blog;
 
 import com.epam.learn.dao.blog.BlogDAO;
 import com.epam.learn.dao.blog.BlogDtoDAO;
-import com.epam.learn.dao.jdbc.blog.BlogDAODtoJdbc;
-import com.epam.learn.dao.jdbc.blog.BlogDAOJdbc;
 import com.epam.learn.dao.jdbc.exeption.ConstraintException;
 import com.epam.learn.model.Blog;
 import com.epam.learn.testdb.SpringJdbcConfig;

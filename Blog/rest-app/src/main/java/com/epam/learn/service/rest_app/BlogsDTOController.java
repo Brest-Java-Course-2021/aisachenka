@@ -1,7 +1,7 @@
 package com.epam.learn.service.rest_app;
 
 import com.epam.learn.model.dto.BlogDTO;
-import com.epam.learn.service.BlogDtoService;
+import com.epam.learn.service.blog.BlogDtoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

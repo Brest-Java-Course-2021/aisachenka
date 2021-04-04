@@ -1,8 +1,8 @@
 package com.epam.learn.service.web_app;
 
 import com.epam.learn.model.Blog;
-import com.epam.learn.service.BlogDtoService;
-import com.epam.learn.service.BlogService;
+import com.epam.learn.service.blog.BlogDtoService;
+import com.epam.learn.service.blog.BlogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

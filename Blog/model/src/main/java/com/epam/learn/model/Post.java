@@ -4,10 +4,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Post {
     private Integer postId;
 
+    @NotNull(message = "Blog id should be initialized")
     private Integer blogId;
 
     @NotBlank(message = "Post test is mandatory")
@@ -73,4 +75,28 @@ public class Post {
         this.numberOfLikes = numberOfLikes;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Post post = (Post) o;
+        return Objects.equals(postId, post.postId) && Objects.equals(blogId, post.blogId) && Objects.equals(text, post.text) && Objects.equals(localDate, post.localDate) && Objects.equals(numberOfLikes, post.numberOfLikes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(postId, blogId, text, localDate, numberOfLikes);
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "postId=" + postId +
+                ", blogId=" + blogId +
+                ", text='" + text + '\'' +
+                ", localDate=" + localDate +
+                ", numberOfLikes=" + numberOfLikes +
+                '}';
+    }
 }

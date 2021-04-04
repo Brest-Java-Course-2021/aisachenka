@@ -44,7 +44,7 @@ public class BlogDAOJdbc implements BlogDAO {
 
     RowMapper<Blog> rowMapper = BeanPropertyRowMapper.newInstance(Blog.class);
 
-    BlogDAOJdbc(DataSource dataSource) {
+    public BlogDAOJdbc(DataSource dataSource) {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
