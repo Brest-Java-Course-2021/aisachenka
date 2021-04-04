@@ -1,7 +1,7 @@
 package com.epam.learn.service.rest;
 
 import com.epam.learn.model.dto.BlogDTO;
-import com.epam.learn.service.BlogDtoService;
+import com.epam.learn.service.blog.BlogDtoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

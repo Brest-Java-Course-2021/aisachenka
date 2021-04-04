@@ -1,7 +1,7 @@
-package com.epam.learn.dao.jdbc;
+package com.epam.learn.dao.jdbc.blog;
 
 
-import com.epam.learn.dao.BlogDAO;
+import com.epam.learn.dao.blog.BlogDAO;
 import com.epam.learn.dao.jdbc.exeption.ConstraintException;
 import com.epam.learn.model.Blog;
 import org.slf4j.Logger;
@@ -44,7 +44,7 @@ public class BlogDAOJdbc implements BlogDAO {
 
     RowMapper<Blog> rowMapper = BeanPropertyRowMapper.newInstance(Blog.class);
 
-    BlogDAOJdbc(DataSource dataSource) {
+    public BlogDAOJdbc(DataSource dataSource) {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 

@@ -1,7 +1,7 @@
 package com.epam.learn.service.rest;
 
 import com.epam.learn.model.dto.BlogDTO;
-import com.epam.learn.service.BlogDtoService;
+import com.epam.learn.service.blog.BlogDtoService;
 import com.epam.learn.service.rest.config.TestConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;

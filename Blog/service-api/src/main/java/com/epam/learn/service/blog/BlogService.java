@@ -1,4 +1,4 @@
-package com.epam.learn.service;
+package com.epam.learn.service.blog;
 
 import com.epam.learn.model.Blog;
 
