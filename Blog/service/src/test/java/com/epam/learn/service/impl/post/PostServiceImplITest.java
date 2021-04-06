@@ -63,7 +63,7 @@ class PostServiceImplITest {
         Optional<Post> post = postService.findById(1);
 
         assertTrue(post.isPresent());
-        Post expected = new Post( 1, "Cute kitty", LocalDate.of(2020,10,23),123);
+        Post expected = new Post( 1, "Cute kitty", LocalDate.of(2018,1,1),123);
         expected.setPostId(1);
         assertEquals( expected,post.get());
 
@@ -178,6 +178,34 @@ class PostServiceImplITest {
         assertEquals(numberOfDeletedValues, 1);
         assertTrue(postService.findById(id).isEmpty());
 
+    }
+
+    @Test
+    void searchByTwoDatesNormalTest() {
+        LOGGER.debug("searchByTwoDatesTest()");
+        List<Post> posts = postService.searchByTwoDates(LocalDate.of(2018,1,1),LocalDate.of(2020,1,1));
+        assertNotNull(posts);
+        assertTrue(posts.size() > 0);
+        for(Post post: posts){
+            assertNotNull(post.getBlogId());
+            assertNotNull(post.getPostId());
+            assertNotNull(post.getNumberOfLikes());
+            assertNotNull(post.getText());
+            assertNotNull(post.getLocalDate());
+        }
+
+        assertTrue(posts.contains(createPost( 1, 1, "Cute kitty", 123, LocalDate.of(2018,1,1))));
+        assertTrue(posts.contains(createPost( 2, 1, "Cute asdads", 3131, LocalDate.of(2019,10,23))));
+
+    }
+
+    @Test
+    void searchByTwoDatesExceptionalTest() {
+        LOGGER.debug("searchByTwoDatesTest()");
+        assertThrows(IllegalArgumentException.class,()->{
+            List<Post> posts = postService.searchByTwoDates(LocalDate.of(2020,1,1), LocalDate.of(2018,1,1));
+            System.out.println("asda");
+        });
     }
 
     Post createPost(Integer postId, Integer blogId, String text, Integer numberOfLikes, LocalDate date){

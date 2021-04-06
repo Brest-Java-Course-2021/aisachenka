@@ -19,6 +19,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.time.LocalDate;
 import java.util.*;
 
 @Repository
@@ -39,6 +40,9 @@ public class PostDAOJdbc implements PostDAO {
 
     @Value("${post.delete}")
     private String delete;
+
+    @Value("${post.search}")
+    private String searchByDate;
 
     private BlogDAO blogDAO;
 
@@ -112,5 +116,16 @@ public class PostDAOJdbc implements PostDAO {
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("POST_ID",id);
         return namedParameterJdbcTemplate.update(delete,sqlParameterSource);
 
+    }
+
+    @Override
+    public List<Post> searchByTwoDates(LocalDate dateBefore, LocalDate dateAfter) {
+        if(dateAfter.isBefore(dateBefore)) throw new IllegalArgumentException("Date After should be later than date before");
+
+        Map<String,Object> parametrizedValues = new HashMap<>();
+        parametrizedValues.put("DATE_BEFORE", dateBefore);
+        parametrizedValues.put("DATE_AFTER", dateAfter);
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource(parametrizedValues);
+        return namedParameterJdbcTemplate.query(searchByDate,sqlParameterSource,rowMapper);
     }
 }

@@ -24,14 +24,16 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     public static final Logger LOGGER = LoggerFactory.getLogger(ControllerAdvisor.class);
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Object> handleIllegalArgument(){
-        List<String> errors = List.of("Blog with this name already exists");
+    public ResponseEntity<Object> handleIllegalArgument(IllegalArgumentException ex){
+        List<String> errors = List.of(ex.getMessage());
 
         LOGGER.warn("handleIllegalArgument() {}",errors);
 
         return new ResponseEntity<>(new ErrorResponse(errors), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
+
+//    Handler of validation errors
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers,
