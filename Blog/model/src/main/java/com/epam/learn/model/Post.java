@@ -13,11 +13,12 @@ public class Post {
     @Size(min = 2, message = "Blog name should be b-n 2 and 50 characters",max = 50)
     private String blogName;
 
-    @NotBlank(message = "Post test is mandatory")
-    @Size(min = 1, max = 300, message = "Text should be b-n 1 and 300 characters")
+    @NotBlank(message = "Post text is mandatory")
+    @Size(max = 300, message = "Text should be b-n 1 and 300 characters")
     private String text;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @PastOrPresent(message = "Date can not be future")
     @NotNull(message = "Please provide a date.")
     private LocalDate localDate;
 
@@ -30,17 +31,17 @@ public class Post {
     }
 
     public Post(@NotBlank(message = "Blog name is mandatory")
-                @Size(min = 2, message = "Blog name should be b-n 2 and 50 characters",max = 50)
+                @Size(min = 2, message = "Blog name should be b-n 2 and 50 characters", max = 50)
                         String blogName,
-                @NotBlank(message = "Post test is mandatory")
-                @Size(min = 1, max = 300, message = "Text should be b-n 1 and 300 characters")
+                @NotBlank(message = "Post text is mandatory")
+                @Size(max = 300, message = "Text should be b-n 1 and 300 characters")
                         String text,
+                @PastOrPresent(message = "Date can not be future")
                 @NotNull(message = "Please provide a date.")
                         LocalDate localDate,
                 @NotNull(message = "number of Likes is mandatory")
                 @Min(value = 0, message = "number of Likes should be greater or equal zero")
-                @Max(value = Integer.MAX_VALUE, message = "number of Likes should be lesser than 2,147,483,647")
-                        Integer numberOfLikes){
+                        Integer numberOfLikes) {
         this.blogName = blogName;
         this.text = text;
         this.localDate = localDate;

@@ -106,6 +106,7 @@ public class PostDAOJdbc implements PostDAO {
         parametrizedValues.put("TEXT", post.getText());
         parametrizedValues.put("NUMBER_OF_LIKES", post.getNumberOfLikes());
         parametrizedValues.put("LOCAL_DATE", post.getLocalDate());
+        parametrizedValues.put("POST_ID", post.getPostId());
 
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource(parametrizedValues);
         return namedParameterJdbcTemplate.update(update, sqlParameterSource);
