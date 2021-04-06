@@ -41,4 +41,13 @@ public interface BlogDAO {
      * @return number of deleted Blogs
      * */
     Integer delete(Integer blogId);
+
+
+
+    /**
+     * this function call datasource and find blog by Blog's name
+     *
+     * @return Optional of nullable i.e. it contains Blog or not
+     * */
+    Optional<Blog> findByName(String blogName);
 }
