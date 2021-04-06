@@ -9,8 +9,9 @@ import java.util.Objects;
 public class Post {
     private Integer postId;
 
-    @NotNull(message = "Blog id should be initialized")
-    private Integer blogId;
+    @NotBlank(message = "Blog name is mandatory")
+    @Size(min = 2, message = "Blog name should be b-n 2 and 50 characters",max = 50)
+    private String blogName;
 
     @NotBlank(message = "Post test is mandatory")
     @Size(min = 1, max = 300, message = "Text should be b-n 1 and 300 characters")
@@ -25,14 +26,25 @@ public class Post {
     @Max(value = Integer.MAX_VALUE, message = "number of Likes should be lesser than 2,147,483,647")
     private Integer numberOfLikes;
 
-    public Post(Integer blogId, String text, LocalDate localDate, Integer numberOfLikes) {
-        this.blogId = blogId;
+    public Post() {
+    }
+
+    public Post(@NotBlank(message = "Blog name is mandatory")
+                @Size(min = 2, message = "Blog name should be b-n 2 and 50 characters",max = 50)
+                        String blogName,
+                @NotBlank(message = "Post test is mandatory")
+                @Size(min = 1, max = 300, message = "Text should be b-n 1 and 300 characters")
+                        String text,
+                @NotNull(message = "Please provide a date.")
+                        LocalDate localDate,
+                @NotNull(message = "number of Likes is mandatory")
+                @Min(value = 0, message = "number of Likes should be greater or equal zero")
+                @Max(value = Integer.MAX_VALUE, message = "number of Likes should be lesser than 2,147,483,647")
+                        Integer numberOfLikes){
+        this.blogName = blogName;
         this.text = text;
         this.localDate = localDate;
         this.numberOfLikes = numberOfLikes;
-    }
-
-    public Post() {
     }
 
     public Integer getPostId() {
@@ -43,12 +55,12 @@ public class Post {
         this.postId = postId;
     }
 
-    public Integer getBlogId() {
-        return blogId;
+    public String getBlogName() {
+        return blogName;
     }
 
-    public void setBlogId(Integer blogId) {
-        this.blogId = blogId;
+    public void setBlogName(String blogName) {
+        this.blogName = blogName;
     }
 
     public String getText() {
@@ -75,25 +87,24 @@ public class Post {
         this.numberOfLikes = numberOfLikes;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Post post = (Post) o;
-        return Objects.equals(postId, post.postId) && Objects.equals(blogId, post.blogId) && Objects.equals(text, post.text) && Objects.equals(localDate, post.localDate) && Objects.equals(numberOfLikes, post.numberOfLikes);
+        return Objects.equals(postId, post.postId) && Objects.equals(blogName, post.blogName) && Objects.equals(text, post.text) && Objects.equals(localDate, post.localDate) && Objects.equals(numberOfLikes, post.numberOfLikes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(postId, blogId, text, localDate, numberOfLikes);
+        return Objects.hash(postId, blogName, text, localDate, numberOfLikes);
     }
 
     @Override
     public String toString() {
         return "Post{" +
                 "postId=" + postId +
-                ", blogId=" + blogId +
+                ", blogName='" + blogName + '\'' +
                 ", text='" + text + '\'' +
                 ", localDate=" + localDate +
                 ", numberOfLikes=" + numberOfLikes +

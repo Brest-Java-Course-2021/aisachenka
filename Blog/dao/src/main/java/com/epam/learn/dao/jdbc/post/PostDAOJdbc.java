@@ -76,14 +76,14 @@ public class PostDAOJdbc implements PostDAO {
     public Integer create(Post post) {
         LOGGER.debug("create() {}",post);
 
-        if(blogDAO.findById(post.getBlogId()).isEmpty()){
-            LOGGER.warn("Blog with this id doesn't exists {}", post);
-            throw new SuchBlogNotExistsException("Blog with this id doesn't exists");
+        if(blogDAO.findByName(post.getBlogName()).isEmpty()){
+            LOGGER.warn("Blog with such name doesn't exists {}", post);
+            throw new SuchBlogNotExistsException("Blog such this name doesn't exists");
         }
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         Map<String,Object> parametrizedValues = new HashMap<>();
-        parametrizedValues.put("BLOG_ID", post.getBlogId());
+        parametrizedValues.put("BLOG_NAME", post.getBlogName());
         parametrizedValues.put("TEXT", post.getText());
         parametrizedValues.put("NUMBER_OF_LIKES", post.getNumberOfLikes());
         parametrizedValues.put("LOCAL_DATE", post.getLocalDate());
@@ -96,13 +96,13 @@ public class PostDAOJdbc implements PostDAO {
     public Integer update(Post post) {
         LOGGER.debug("update() {}",post);
 
-        if(blogDAO.findById(post.getBlogId()).isEmpty()){
-            LOGGER.warn("Blog with this id doesn't exists {}", post);
-            throw new SuchBlogNotExistsException("Blog with this id doesn't exists");
+        if(blogDAO.findByName(post.getBlogName()).isEmpty()){
+            LOGGER.warn("Blog with such name doesn't exists {}", post);
+            throw new SuchBlogNotExistsException("Blog such this name doesn't exists");
         }
 
         Map<String,Object> parametrizedValues = new HashMap<>();
-        parametrizedValues.put("BLOG_ID", post.getBlogId());
+        parametrizedValues.put("BLOG_NAME", post.getBlogName());
         parametrizedValues.put("TEXT", post.getText());
         parametrizedValues.put("NUMBER_OF_LIKES", post.getNumberOfLikes());
         parametrizedValues.put("LOCAL_DATE", post.getLocalDate());
@@ -116,7 +116,6 @@ public class PostDAOJdbc implements PostDAO {
         LOGGER.debug("delete() by id{} ", id);
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("POST_ID",id);
         return namedParameterJdbcTemplate.update(delete,sqlParameterSource);
-
     }
 
     @Override
@@ -132,4 +131,5 @@ public class PostDAOJdbc implements PostDAO {
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource(parametrizedValues);
         return namedParameterJdbcTemplate.query(searchByDate,sqlParameterSource,rowMapper);
     }
+
 }

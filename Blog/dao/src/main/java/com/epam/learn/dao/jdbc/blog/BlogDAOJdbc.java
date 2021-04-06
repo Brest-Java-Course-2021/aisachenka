@@ -39,6 +39,8 @@ public class BlogDAOJdbc implements BlogDAO {
     @Value("${blog.count}")
     private String SQL_COUNT_BLOG_NAME_QUERY;
 
+    @Value("${blog.findByName}")
+    private String findByName;
 
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -109,5 +111,13 @@ public class BlogDAOJdbc implements BlogDAO {
         }
 
         return update;
+    }
+
+    @Override
+    public Optional<Blog> findByName(String blogName) {
+        LOGGER.debug("Find Blogs by Name {}", blogName);
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("BLOG_NAME", blogName);
+        List<Blog> results = namedParameterJdbcTemplate.query(findByName, sqlParameterSource, rowMapper);
+        return Optional.ofNullable(DataAccessUtils.uniqueResult(results));
     }
 }
