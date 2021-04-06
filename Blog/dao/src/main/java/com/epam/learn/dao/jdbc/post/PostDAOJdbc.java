@@ -113,6 +113,7 @@ public class PostDAOJdbc implements PostDAO {
 
     @Override
     public Integer delete(Integer id) {
+        LOGGER.debug("delete() by id{} ", id);
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("POST_ID",id);
         return namedParameterJdbcTemplate.update(delete,sqlParameterSource);
 
@@ -120,8 +121,11 @@ public class PostDAOJdbc implements PostDAO {
 
     @Override
     public List<Post> searchByTwoDates(LocalDate dateBefore, LocalDate dateAfter) {
-        if(dateAfter.isBefore(dateBefore)) throw new IllegalArgumentException("Date After should be later than date before");
-
+        LOGGER.debug("searchByTwoDates() before={} after={}", dateBefore, dateAfter);
+        if(dateAfter.isBefore(dateBefore)) {
+            LOGGER.warn("searchByTwoDates() throw IllegalArgumentException because Date After should be later than date before");
+            throw new IllegalArgumentException("Date After should be later than date before");
+        }
         Map<String,Object> parametrizedValues = new HashMap<>();
         parametrizedValues.put("DATE_BEFORE", dateBefore);
         parametrizedValues.put("DATE_AFTER", dateAfter);
