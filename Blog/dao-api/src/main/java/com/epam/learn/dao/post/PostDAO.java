@@ -2,6 +2,7 @@ package com.epam.learn.dao.post;
 
 import com.epam.learn.model.Post;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,5 +46,14 @@ public interface PostDAO {
      * @return number of deleted posts
      * */
     Integer delete(Integer id);
+
+    /**
+     * Method that search list of post in database filtered b-n 2 date
+     *
+     * @param dateBefore start date should be lesser than dateAfter
+     * @param dateAfter end date should be greater than dateBefore
+     * @return number of deleted posts
+     * */
+    List<Post> searchByTwoDates(LocalDate dateBefore, LocalDate dateAfter);
 
 }

@@ -2,6 +2,7 @@ package com.epam.learn.service.post;
 
 import com.epam.learn.model.Post;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 /**
@@ -19,5 +20,7 @@ public interface PostService {
     Integer update(Post post);
 
     Integer delete(Integer id);
+
+    List<Post> searchByTwoDates(LocalDate dateBefore, LocalDate dateAfter);
 
 }
