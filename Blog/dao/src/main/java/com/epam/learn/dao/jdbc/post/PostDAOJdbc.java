@@ -78,7 +78,7 @@ public class PostDAOJdbc implements PostDAO {
 
         if(blogDAO.findByName(post.getBlogName()).isEmpty()){
             LOGGER.warn("Blog with such name doesn't exists {}", post);
-            throw new SuchBlogNotExistsException("Blog such this name doesn't exists");
+            throw new SuchBlogNotExistsException("Blog with such name doesn't exists");
         }
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -98,7 +98,7 @@ public class PostDAOJdbc implements PostDAO {
 
         if(blogDAO.findByName(post.getBlogName()).isEmpty()){
             LOGGER.warn("Blog with such name doesn't exists {}", post);
-            throw new SuchBlogNotExistsException("Blog such this name doesn't exists");
+            throw new SuchBlogNotExistsException("Blog with such name doesn't exists");
         }
 
         Map<String,Object> parametrizedValues = new HashMap<>();

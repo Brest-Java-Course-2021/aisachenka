@@ -19,12 +19,11 @@ public class Post {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @PastOrPresent(message = "Date can not be future")
-    @NotNull(message = "Please provide a date.")
+    @NotNull(message = "Please provide a date")
     private LocalDate localDate;
 
     @NotNull(message = "number of Likes is mandatory")
     @Min(value = 0, message = "number of Likes should be greater or equal zero")
-    @Max(value = Integer.MAX_VALUE, message = "number of Likes should be lesser than 2,147,483,647")
     private Integer numberOfLikes;
 
     public Post() {
