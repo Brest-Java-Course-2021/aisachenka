@@ -1,6 +1,7 @@
-package com.epam.learn.service.rest_app;
+package com.epam.learn.service.rest_app.blog;
 
 import com.epam.learn.model.dto.BlogDTO;
+import com.epam.learn.service.rest_app.BlogsDTOController;
 import com.epam.learn.service.rest_app.exception.ControllerAdvisor;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,7 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 @SpringBootTest
-@ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
 @Transactional
 public class BlogsDTOControllerITest {

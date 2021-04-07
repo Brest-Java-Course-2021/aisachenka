@@ -1,6 +1,7 @@
-package com.epam.learn.service.rest_app;
+package com.epam.learn.service.rest_app.blog;
 
 import com.epam.learn.model.Blog;
+import com.epam.learn.service.rest_app.BlogsController;
 import com.epam.learn.service.rest_app.exception.ControllerAdvisor;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
