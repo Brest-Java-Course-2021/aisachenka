@@ -1,6 +1,7 @@
 package com.epam.learn.service.rest_app.exception;
 
 import com.epam.learn.dao.jdbc.exeption.ConstraintException;
+import com.epam.learn.dao.jdbc.exeption.SuchBlogNotExistsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -55,6 +56,13 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ConstraintException.class)
     public ResponseEntity<Object> handleConstraint(){
         List<String> errors = List.of("Can't delete Blog because it has dependencies");
+        LOGGER.warn("handleIllegalArgument() {}",errors);
+        return new ResponseEntity<>(new ErrorResponse(errors), HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(SuchBlogNotExistsException.class)
+    public ResponseEntity<Object> handleSuchBlogNotExists(SuchBlogNotExistsException ex){
+        List<String> errors = List.of(ex.getMessage());
         LOGGER.warn("handleIllegalArgument() {}",errors);
         return new ResponseEntity<>(new ErrorResponse(errors), HttpStatus.FORBIDDEN);
     }

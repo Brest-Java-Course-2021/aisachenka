@@ -78,7 +78,7 @@ public class PostDAOJdbc implements PostDAO {
 
         if(blogDAO.findByName(post.getBlogName()).isEmpty()){
             LOGGER.warn("Blog with such name doesn't exists {}", post);
-            throw new SuchBlogNotExistsException("Blog such this name doesn't exists");
+            throw new SuchBlogNotExistsException("Blog with such name doesn't exists");
         }
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -98,7 +98,7 @@ public class PostDAOJdbc implements PostDAO {
 
         if(blogDAO.findByName(post.getBlogName()).isEmpty()){
             LOGGER.warn("Blog with such name doesn't exists {}", post);
-            throw new SuchBlogNotExistsException("Blog such this name doesn't exists");
+            throw new SuchBlogNotExistsException("Blog with such name doesn't exists");
         }
 
         Map<String,Object> parametrizedValues = new HashMap<>();
@@ -106,6 +106,7 @@ public class PostDAOJdbc implements PostDAO {
         parametrizedValues.put("TEXT", post.getText());
         parametrizedValues.put("NUMBER_OF_LIKES", post.getNumberOfLikes());
         parametrizedValues.put("LOCAL_DATE", post.getLocalDate());
+        parametrizedValues.put("POST_ID", post.getPostId());
 
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource(parametrizedValues);
         return namedParameterJdbcTemplate.update(update, sqlParameterSource);
