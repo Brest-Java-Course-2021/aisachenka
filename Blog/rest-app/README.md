@@ -1,4 +1,5 @@
 # REST ENDPOINTS
+
 ##### Here it would be shown with help of [HTTPie](https://httpie.io/), curl for humans
 [Docs for HTTPie](https://httpie.io/docs)
 
@@ -31,3 +32,5 @@ http -v DELETE localhost:8090/blogs/3
 ```shell
 http -v GET localhost:8090/blogs/1
 ```
+
+##You can also use prepared in advance postman collection [here](../../doc/Postman%20collection/Blogs%20and%20posts.postman_collection.json)

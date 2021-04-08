@@ -31,3 +31,4 @@ java -jar web-app/target/web-app-1.0.jar
 ```
 This starts Spring boot Web application and Rest application serves up your project on [http://localhost:8080](http://localhost:8080) and [http://localhost:8090](http://localhost:8090) respectively.
 
+## REST Endpoints for local testing [here](Blog/rest-app/README.md)
