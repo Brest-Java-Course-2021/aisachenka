@@ -33,4 +33,4 @@ http -v DELETE localhost:8090/blogs/3
 http -v GET localhost:8090/blogs/1
 ```
 
-##You can also use prepared in advance postman collection [here](../../doc/Postman%20collection/Blogs%20and%20posts.postman_collection.json)
+## You can also use prepared in advance postman collection [here](../../doc/Postman%20collection/Blogs%20and%20posts.postman_collection.json)
