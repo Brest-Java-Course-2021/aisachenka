@@ -2,8 +2,8 @@ package com.epam.learn.service.web_app.config;
 
 import com.epam.learn.service.blog.BlogDtoService;
 import com.epam.learn.service.blog.BlogService;
-import com.epam.learn.service.rest.BlogDTOServiceRest;
-import com.epam.learn.service.rest.BlogServiceRest;
+import com.epam.learn.service.rest.blog.BlogDTOServiceRest;
+import com.epam.learn.service.rest.blog.BlogServiceRest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
