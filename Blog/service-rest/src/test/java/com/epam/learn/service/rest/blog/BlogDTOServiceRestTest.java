@@ -1,4 +1,4 @@
-package com.epam.learn.service.rest;
+package com.epam.learn.service.rest.blog;
 
 import com.epam.learn.model.dto.BlogDTO;
 import com.epam.learn.service.blog.BlogDtoService;
