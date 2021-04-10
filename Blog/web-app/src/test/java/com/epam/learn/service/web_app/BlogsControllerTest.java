@@ -102,7 +102,7 @@ class BlogsControllerTest {
     }
 
     @Test
-    void shouldGetFormOfaddBlog() throws Exception {
+    void shouldGetFormOfAddBlog() throws Exception {
         mockMvc.perform(get("/blog/add"))
                 .andDo(print())
                 .andExpect(content().contentType("text/html;charset=UTF-8"))
