@@ -34,6 +34,8 @@
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
 
+        <!--    Logging-->
+
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
@@ -46,6 +48,7 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
         </dependency>
+
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -119,6 +122,10 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
         </dependency>
 
     </dependencies>

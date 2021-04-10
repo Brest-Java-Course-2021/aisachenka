@@ -69,9 +69,14 @@ public class PostRestClient implements PostService {
     @Override
     public List<Post> searchByTwoDates(LocalDate dateBefore, LocalDate dateAfter) {
         LOGGER.debug("searchByTwoDates() {} {}",dateBefore,dateAfter);
-        return restTemplate.exchange(new StringBuilder(url)
-                .append("/search?dateBefore=").append(dateBefore)
-                .append("&dateAfter=").append(dateAfter)
-                .toString(), HttpMethod.GET,null, new ParameterizedTypeReference<List<Post>>(){}).getBody();
+        String dateBeforeString = dateBefore == null? "":dateBefore.toString();
+        String dateAfterString = dateAfter == null? "":dateAfter.toString();
+
+
+        String searchUrl = new StringBuilder(url)
+                .append("/search?dateBefore=").append(dateBeforeString)
+                .append("&dateAfter=").append(dateAfterString)
+                .toString();
+        return restTemplate.exchange(searchUrl, HttpMethod.GET,null, new ParameterizedTypeReference<List<Post>>(){}).getBody();
     }
 }

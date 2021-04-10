@@ -36,7 +36,8 @@
 
                 </ul>
             </div>
-            <a href="posts.html" th:href="@{/posts.html}" type="button" class="btn-close btn-close-white" aria-label="Close"></a>
+            <a href="posts.html" th:href="@{/posts}" type="button" class="btn-close btn-close-white"
+               aria-label="Close"></a>
 
         </div>
 
@@ -51,31 +52,60 @@
     </nav>
 </header>
 
-<section id="blog">
+<section id="post">
     <div class="container-fluid">
         <div class="row">
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <form>
+                        <form id="postEdit"
+                              th:action="@{${#httpServletRequest.servletPath}}"
+                              th:method="@{post}"
+                              th:object="${postModel}"
+                              action="posts.html"
+                              th:modelAttribute="postModel">
+
+                            <input id="field_postId"
+                                   type="hidden"
+                                   th:field="*{postId}"/>
+
                             <div class="mb-3">
                                 <label class="form-label"
-                                       for="field_postText">Text of Post</label>
-                                <input class="form-control "
-                                       id="field_postText"
-                                       type="text" value="Пабло Эскобар тратил 300$ ежемесячно только на шикарную шляпу, чтобы та была как раз"/>
-                            </div>
-                            <div class="mb-3">
-                                <input class="form-control "
-                                       id="field_postDate"
-                                       type="date"/>
+                                       for="selectBlog">Name of Blog</label>
+                                <select th:field="*{blogName}" class="form-select" aria-label="select Blog" id="selectBlog">
+                                    <option selected value="1" th:text="${postModel.blogName}"></option>
+                                    <option th:each="blog : ${blogs}" th:text="${blog.blogName}" th:value="${blog.blogName}"></option>
+                                </select>
                             </div>
 
                             <div class="mb-3">
+                                <label class="form-label"
+                                       for="text">Text of Post</label>
                                 <input class="form-control "
-                                       id="field_numberOfLikes"
-                                       value="666"
-                                       type="number"/>
+                                       id="text"
+                                       th:field="*{text}"
+                                       th:value="${postModel.text}"
+                                       type="text" value=""/>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label"
+                                       for="localDate">Date of posting</label>
+                                <input class="form-control "
+                                       id="localDate"
+                                       th:field="*{localDate}"
+                                       th:value="${postModel.localDate}"
+                                       type="date" value=""/>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label"
+                                       for="numberOfLikes">Number of Likes</label>
+                                <input class="form-control "
+                                       id="numberOfLikes"
+                                       th:field="*{numberOfLikes}"
+                                       th:value="${postModel.numberOfLikes}"
+                                       type="number" value=""/>
                             </div>
 
                             <div class="d-flex justify-content-end">
@@ -84,7 +114,8 @@
                                    class="btn btn-light me-1"
                                    title="Cancel">Cancel</a>
                                 <a href="posts.html"
-                                   th:href="@{/blogs}"
+                                   th:href="@{/posts}"
+                                   th:onclick="@{document.forms['postEdit'].submit(); return false;}"
                                    class="btn btn-primary"
                                    title="Save blog">Save</a>
                             </div>

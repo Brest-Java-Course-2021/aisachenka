@@ -10,7 +10,7 @@
           th:href="@{/css/style.css}">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <title>Blog Add</title>
+    <title>Post Edit</title>
 </head>
 <body>
 
@@ -25,18 +25,19 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="blogs.html"
+                        <a class="nav-link" href="blogs.html"
                            th:href="@{/blogs}">Blogs</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="posts.html"
+                        <a class="nav-link active" href="posts.html"
                            th:href="@{/posts}">Posts</a>
                     </li>
 
                 </ul>
             </div>
-            <a href="blogs.html" th:href="@{/blogs}" type="button" class="btn-close btn-close-white" aria-label="Close"></a>
+            <a href="posts.html" th:href="@{/posts}" type="button" class="btn-close btn-close-white"
+               aria-label="Close"></a>
 
         </div>
 
@@ -51,40 +52,67 @@
     </nav>
 </header>
 
-<section id="blog">
+<section id="post">
     <div class="container-fluid">
         <div class="row">
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <form id="blogAdd"
+                        <form id="postAdd"
                               th:action="@{${#httpServletRequest.servletPath}}"
                               th:method="@{post}"
-                              th:object="${blog}"
-                              action="blogs.html"
-                              th:modelAttribute="blog">
+                              th:object="${postModel}"
+                                action="posts.html"
+                              th:modelAttribute="postModel">
 
-                            <input id="field_blogId"
+                            <input id="field_postId"
                                    type="hidden"
-                                   th:field="*{blogId}"/>
-
+                                   th:field="*{postId}"/>
 
                             <div class="mb-3">
                                 <label class="form-label"
-                                       for="blogName">Blog Name</label>
+                                       for="selectBlog">Name of Blog</label>
+                                <select th:field="*{blogName}" class="form-select" aria-label="select Blog" id="selectBlog">
+                                    <option selected value="1"></option>
+                                    <option th:each="blog : ${blogs}" th:text="${blog.blogName}" th:value="${blog.blogName}"></option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label"
+                                       for="text">Text of Post</label>
                                 <input class="form-control "
-                                       id="blogName"
-                                       th:field="*{blogName}"
+                                       id="text"
+                                       th:field="*{text}"
                                        type="text" value=""/>
                             </div>
+
+                            <div class="mb-3">
+                                <label class="form-label"
+                                       for="localDate">Date of posting</label>
+                                <input class="form-control "
+                                       id="localDate"
+                                       th:field="*{localDate}"
+                                       type="date" value=""/>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label"
+                                       for="numberOfLikes">Number of Likes</label>
+                                <input class="form-control "
+                                       id="numberOfLikes"
+                                       th:field="*{numberOfLikes}"
+                                       type="number" value=""/>
+                            </div>
+
                             <div class="d-flex justify-content-end">
-                                <a href="blogs.html"
-                                   th:href="@{/blogs}"
+                                <a href="posts.html"
+                                   th:href="@{/posts}"
                                    class="btn btn-light me-1"
                                    title="Cancel">Cancel</a>
-                                <a href="blogs.html"
-                                   th:href="@{/blogs}"
-                                   th:onclick="@{document.forms['blogAdd'].submit(); return false;}"
+                                <a href="posts.html"
+                                   th:href="@{/posts}"
+                                   th:onclick="@{document.forms['postAdd'].submit(); return false;}"
                                    class="btn btn-primary"
                                    title="Save blog">Save</a>
                             </div>

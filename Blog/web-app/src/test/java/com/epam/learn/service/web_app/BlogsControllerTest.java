@@ -4,6 +4,7 @@ import com.epam.learn.model.Blog;
 import com.epam.learn.model.dto.BlogDTO;
 import com.epam.learn.service.blog.BlogDtoService;
 import com.epam.learn.service.blog.BlogService;
+import com.epam.learn.service.post.PostService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -35,6 +36,9 @@ class BlogsControllerTest {
 
     @MockBean
     BlogService blogService;
+
+    @MockBean
+    PostService postService;
 
     @MockBean
     BlogDtoService blogDtoService;
@@ -98,7 +102,7 @@ class BlogsControllerTest {
     }
 
     @Test
-    void shouldGetFormOfaddBlog() throws Exception {
+    void shouldGetFormOfAddBlog() throws Exception {
         mockMvc.perform(get("/blog/add"))
                 .andDo(print())
                 .andExpect(content().contentType("text/html;charset=UTF-8"))
