@@ -218,7 +218,7 @@ public class PostsControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("text/html;charset=UTF-8"))
-                .andExpect(view().name("/posts"))
+                .andExpect(view().name("posts"))
                 .andExpect(model().attribute("posts", hasItem(
                         allOf(
                                 hasProperty("postId", is(p1.getPostId())),

@@ -87,7 +87,7 @@ public class PostsController {
         LOGGER.debug("filterPostsByDate() {} {}", dateBefore, dateAfter);
         List<Post> postList = postService.searchByTwoDates(dateBefore,dateAfter);
         model.addAttribute("posts", postList);
-        return "/posts";
+        return "posts";
     }
 
 }
