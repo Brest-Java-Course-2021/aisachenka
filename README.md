@@ -13,7 +13,7 @@ This is sample 'Blogs and Posts' web application.
 ## Build application:
 ```shell
 cd Blog/
-mvn clean package
+mvn clean install
 ```
 
 ## Local tests with Spring Boot
