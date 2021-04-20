@@ -29,7 +29,7 @@ public class BlogServiceRest implements BlogService {
     @Override
     public List<Blog> findAll() {
         LOGGER.debug("findAll()");
-        ResponseEntity responseEntity = restTemplate.getForEntity(url,List.class);
+        ResponseEntity responseEntity = restTemplate.getForEntity(url, List.class);
         return (List<Blog>) responseEntity.getBody();
     }
 
@@ -52,8 +52,8 @@ public class BlogServiceRest implements BlogService {
         LOGGER.debug("update() {}", blog);
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
-        HttpEntity<Blog> httpEntity = new HttpEntity<>(blog,headers);
-        ResponseEntity<Integer> responseEntity = restTemplate.exchange(url, HttpMethod.PUT,httpEntity,Integer.class);
+        HttpEntity<Blog> httpEntity = new HttpEntity<>(blog, headers);
+        ResponseEntity<Integer> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, httpEntity, Integer.class);
 
         return responseEntity.getBody();
     }

@@ -19,7 +19,7 @@ public class BlogsDTOController {
     }
 
     @GetMapping("/blogs-dto")
-    public List<BlogDTO> getAllDTOBlogs(){
+    public List<BlogDTO> getAllDTOBlogs() {
         return blogDtoService.getAllBlogsWithMaxLikes();
     }
 }

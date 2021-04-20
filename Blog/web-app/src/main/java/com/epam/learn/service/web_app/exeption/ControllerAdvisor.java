@@ -14,13 +14,13 @@ public class ControllerAdvisor {
 
     private ObjectMapper mapper = new ObjectMapper();
 
-   @ExceptionHandler(HttpClientErrorException.class)
+    @ExceptionHandler(HttpClientErrorException.class)
     public String handle(Exception ex, Model model) throws JsonProcessingException {
 
         ModelAndView mv = new ModelAndView();
         String exception = ex.getMessage();
-        exception = new StringBuilder(exception).substring(7,exception.length()-1);
-        model.addAttribute("errors", mapper.readValue( exception, ErrorResponse.class).getErrors() );
+        exception = new StringBuilder(exception).substring(7, exception.length() - 1);
+        model.addAttribute("errors", mapper.readValue(exception, ErrorResponse.class).getErrors());
 
 
         return "error";

@@ -47,6 +47,6 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> searchByTwoDates(LocalDate dateBefore, LocalDate dateAfter) {
-        return postDAO.searchByTwoDates(dateBefore,dateAfter);
+        return postDAO.searchByTwoDates(dateBefore, dateAfter);
     }
 }

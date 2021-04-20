@@ -15,23 +15,22 @@ import javax.sql.DataSource;
 
 @Configuration
 @PropertySource({"classpath:dao.properties"})
-public class ServiceTestConfig
-{
+public class ServiceTestConfig {
     @Autowired
     DataSource dataSource;
 
     @Bean
-    PostDAO postDAO(){
+    PostDAO postDAO() {
         return new PostDAOJdbc(dataSource, blogDAO());
     }
 
     @Bean
-    BlogDAO blogDAO(){
+    BlogDAO blogDAO() {
         return new BlogDAOJdbc(dataSource);
     }
 
     @Bean
-    PostService postService(){
+    PostService postService() {
         return new PostServiceImpl(postDAO());
     }
 }

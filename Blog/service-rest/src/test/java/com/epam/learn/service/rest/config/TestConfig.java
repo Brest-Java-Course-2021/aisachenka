@@ -18,22 +18,22 @@ public class TestConfig {
     public static final String POST_URL = "http://localhost:8090/posts";
 
     @Bean
-    RestTemplate getRestTemplate(){
+    RestTemplate getRestTemplate() {
         return new RestTemplate(new SimpleClientHttpRequestFactory());
     }
 
     @Bean
-    BlogService getBlogService(){
+    BlogService getBlogService() {
         return new BlogServiceRest(BLOG_URL, getRestTemplate());
     }
 
     @Bean
-    BlogDtoService getBlogDtoService(){
+    BlogDtoService getBlogDtoService() {
         return new BlogDTOServiceRest(BLOG_DTO_URL, getRestTemplate());
     }
 
     @Bean
-    PostService postService(){
+    PostService postService() {
         return new PostRestClient(POST_URL, getRestTemplate());
     }
 

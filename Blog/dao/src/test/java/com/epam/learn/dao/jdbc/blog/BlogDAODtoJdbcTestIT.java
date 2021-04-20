@@ -16,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @DataJdbcTest
 @Import({BlogDAODtoJdbc.class})
 @ContextConfiguration(classes = SpringJdbcConfig.class)
@@ -29,13 +30,13 @@ class BlogDAODtoJdbcTestIT {
     BlogDtoDAO blogDtoDAO;
 
     @Test
-    public void getAllBlogsWithMaxLikesTest(){
+    public void getAllBlogsWithMaxLikesTest() {
         LOGGER.debug("getAllBlogsWithMaxLikesTest()");
         List<BlogDTO> allBlogsWithMaxLikes = blogDtoDAO.getAllBlogsWithMaxLikes();
-        assertTrue(allBlogsWithMaxLikes.get(1).getBlogId()==2);
-        assertTrue(allBlogsWithMaxLikes.get(1).getMaxNumberOfLikes()==4454);
+        assertTrue(allBlogsWithMaxLikes.get(1).getBlogId() == 2);
+        assertTrue(allBlogsWithMaxLikes.get(1).getMaxNumberOfLikes() == 4454);
 
-        assertTrue(allBlogsWithMaxLikes.get(2).getBlogId()==1);
-        assertTrue(allBlogsWithMaxLikes.get(2).getMaxNumberOfLikes()==3131);
+        assertTrue(allBlogsWithMaxLikes.get(2).getBlogId() == 1);
+        assertTrue(allBlogsWithMaxLikes.get(2).getMaxNumberOfLikes() == 3131);
     }
 }

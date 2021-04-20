@@ -63,15 +63,15 @@ public class BlogsDTOControllerITest {
     void shouldGetAllBlogsWithDTO() throws Exception {
         LOGGER.debug("shouldGetAllBlogsWithDTO()");
         List<BlogDTO> allBlogsWithMaxLikes = blogsDTOService.getAllBlogsWithMaxLikes();
-        assertTrue(allBlogsWithMaxLikes.get(1).getBlogId()==2);
-        assertTrue(allBlogsWithMaxLikes.get(1).getMaxNumberOfLikes()==4454);
+        assertTrue(allBlogsWithMaxLikes.get(1).getBlogId() == 2);
+        assertTrue(allBlogsWithMaxLikes.get(1).getMaxNumberOfLikes() == 4454);
 
-        assertTrue(allBlogsWithMaxLikes.get(2).getBlogId()==1);
-        assertTrue(allBlogsWithMaxLikes.get(2).getMaxNumberOfLikes()==3131);
+        assertTrue(allBlogsWithMaxLikes.get(2).getBlogId() == 1);
+        assertTrue(allBlogsWithMaxLikes.get(2).getMaxNumberOfLikes() == 3131);
     }
 
 
-    class MockBlogsDTOService{
+    class MockBlogsDTOService {
         public List<BlogDTO> getAllBlogsWithMaxLikes() throws Exception {
             LOGGER.debug("getAllBlogsWithMaxLikes");
             MockHttpServletResponse response = mockMvc.perform(get(BLOGS_DTO_ENDPOINT)
@@ -79,7 +79,8 @@ public class BlogsDTOControllerITest {
                     .andExpect(status().isOk())
                     .andReturn().getResponse();
 
-            return objectMapper.readValue(response.getContentAsString(), new TypeReference<List<BlogDTO>>() {});
+            return objectMapper.readValue(response.getContentAsString(), new TypeReference<List<BlogDTO>>() {
+            });
         }
     }
 }

@@ -266,7 +266,7 @@ class PostControllerITest {
         }
 
         public List<Post> searchByTwoDates(LocalDate dateBefore, LocalDate dateAfter) throws Exception {
-            LOGGER.debug("searchByTwoDates() {} {}", dateBefore,dateAfter);
+            LOGGER.debug("searchByTwoDates() {} {}", dateBefore, dateAfter);
             MockHttpServletResponse response = mockMvc.perform(get(POST_ENDPOINT + "/search")
                     .param("dateBefore", dateBefore.toString())
                     .param("dateAfter", dateAfter.toString()).accept(MediaType.APPLICATION_JSON))

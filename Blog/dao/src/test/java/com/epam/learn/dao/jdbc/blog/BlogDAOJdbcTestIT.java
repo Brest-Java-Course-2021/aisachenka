@@ -197,10 +197,10 @@ public class BlogDAOJdbcTestIT {
     }
 
     @Test
-    void shouldThrowExeptionOnDeleteOfConstrainedField(){
+    void shouldThrowExeptionOnDeleteOfConstrainedField() {
         LOGGER.debug("shouldThrowExeptionOnDeleteOfConstrainedField()");
-        assertThrows(ConstraintException.class,()-> {
-           blogDAO.delete(1);
+        assertThrows(ConstraintException.class, () -> {
+            blogDAO.delete(1);
         });
 
 

@@ -72,9 +72,11 @@
                             <div class="mb-3">
                                 <label class="form-label"
                                        for="selectBlog">Name of Blog</label>
-                                <select th:field="*{blogName}" class="form-select" aria-label="select Blog" id="selectBlog">
+                                <select th:field="*{blogName}" class="form-select" aria-label="select Blog"
+                                        id="selectBlog">
                                     <option selected value="1" th:text="${postModel.blogName}"></option>
-                                    <option th:each="blog : ${blogs}" th:text="${blog.blogName}" th:value="${blog.blogName}"></option>
+                                    <option th:each="blog : ${blogs}" th:text="${blog.blogName}"
+                                            th:value="${blog.blogName}"></option>
                                 </select>
                             </div>
 

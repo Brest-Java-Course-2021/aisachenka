@@ -68,7 +68,7 @@ public class BlogDAOJdbc implements BlogDAO {
     public Integer create(Blog blog) {
         LOGGER.debug("Create blog {}", blog);
 
-        if(!isBlogNameUnique(blog)) throw new IllegalArgumentException("Blog  with the same name already exists");
+        if (!isBlogNameUnique(blog)) throw new IllegalArgumentException("Blog  with the same name already exists");
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("BLOG_NAME", blog.getBlogName());
@@ -76,9 +76,9 @@ public class BlogDAOJdbc implements BlogDAO {
         return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
 
-    private boolean isBlogNameUnique(Blog blog){
+    private boolean isBlogNameUnique(Blog blog) {
         return namedParameterJdbcTemplate.queryForObject(SQL_COUNT_BLOG_NAME_QUERY,
-                new MapSqlParameterSource("BLOG_NAME", blog.getBlogName()), Integer.class ) == 0;
+                new MapSqlParameterSource("BLOG_NAME", blog.getBlogName()), Integer.class) == 0;
     }
 
 
@@ -86,7 +86,7 @@ public class BlogDAOJdbc implements BlogDAO {
     public Integer update(Blog blog) {
         LOGGER.debug("Update blog {}", blog);
 
-        if(!isBlogNameUnique(blog)){
+        if (!isBlogNameUnique(blog)) {
             LOGGER.warn("cannot update a field with a blog name that already exists {}", blog);
             throw new IllegalArgumentException("cannot update a field with a blog name that already exists");
         }
@@ -105,8 +105,8 @@ public class BlogDAOJdbc implements BlogDAO {
         Integer update;
         try {
             update = namedParameterJdbcTemplate.update(SQL_DELETE_BLOG_QUERY, sqlParameterSource);
-        }catch (DataAccessException exception){
-            LOGGER.warn("Can't delete Blog because it has dependencies id={} ",blogId);
+        } catch (DataAccessException exception) {
+            LOGGER.warn("Can't delete Blog because it has dependencies id={} ", blogId);
             throw new ConstraintException("Can't delete Blog because it has dependencies");
         }
 

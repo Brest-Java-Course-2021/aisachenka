@@ -25,16 +25,16 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     public static final Logger LOGGER = LoggerFactory.getLogger(ControllerAdvisor.class);
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Object> handleIllegalArgument(IllegalArgumentException ex){
+    public ResponseEntity<Object> handleIllegalArgument(IllegalArgumentException ex) {
         List<String> errors = List.of(ex.getMessage());
 
-        LOGGER.warn("handleIllegalArgument() {}",errors);
+        LOGGER.warn("handleIllegalArgument() {}", errors);
 
         return new ResponseEntity<>(new ErrorResponse(errors), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
 
-//    Handler of validation errors
+    //    Handler of validation errors
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers,
@@ -47,23 +47,23 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
                 .stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.toList());
-        LOGGER.warn("handleIllegalArgument() {}",errors);
+        LOGGER.warn("handleIllegalArgument() {}", errors);
         return new ResponseEntity<>(new ErrorResponse(errors), headers, status);
 
     }
 
 
     @ExceptionHandler(ConstraintException.class)
-    public ResponseEntity<Object> handleConstraint(){
+    public ResponseEntity<Object> handleConstraint() {
         List<String> errors = List.of("Can't delete Blog because it has dependencies");
-        LOGGER.warn("handleIllegalArgument() {}",errors);
+        LOGGER.warn("handleIllegalArgument() {}", errors);
         return new ResponseEntity<>(new ErrorResponse(errors), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(SuchBlogNotExistsException.class)
-    public ResponseEntity<Object> handleSuchBlogNotExists(SuchBlogNotExistsException ex){
+    public ResponseEntity<Object> handleSuchBlogNotExists(SuchBlogNotExistsException ex) {
         List<String> errors = List.of(ex.getMessage());
-        LOGGER.warn("handleIllegalArgument() {}",errors);
+        LOGGER.warn("handleIllegalArgument() {}", errors);
         return new ResponseEntity<>(new ErrorResponse(errors), HttpStatus.FORBIDDEN);
     }
 

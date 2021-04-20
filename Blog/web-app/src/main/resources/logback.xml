@@ -6,7 +6,7 @@
     </appender>
     <logger name="com.epam.learn" level="DEBUG">
         <appender-ref ref="STDOUT"/>
-<!--        <appender-ref ref="FILE"/>-->
+        <!--        <appender-ref ref="FILE"/>-->
     </logger>
 
     <root level="INFO">

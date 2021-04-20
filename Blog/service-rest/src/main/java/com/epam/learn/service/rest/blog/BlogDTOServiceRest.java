@@ -30,6 +30,7 @@ public class BlogDTOServiceRest implements BlogDtoService {
     @Override
     public List<BlogDTO> getAllBlogsWithMaxLikes() {
         LOGGER.debug("getAllBlogsWithMaxLikes()");
-        return restTemplate.exchange(url, GET, null, new ParameterizedTypeReference<List<BlogDTO>>() {}).getBody();
+        return restTemplate.exchange(url, GET, null, new ParameterizedTypeReference<List<BlogDTO>>() {
+        }).getBody();
     }
 }

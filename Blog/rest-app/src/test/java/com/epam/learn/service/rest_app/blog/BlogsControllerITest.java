@@ -160,7 +160,6 @@ class BlogsControllerITest {
     }
 
 
-
     @Test
     void shouldReturnUnprocessableEntityAndErrorMessageWhenWeUpdateWithRepeatableValues() throws Exception {
         LOGGER.debug("shouldReturnUnprocessableEntityAndErrorMessage()");
@@ -170,7 +169,7 @@ class BlogsControllerITest {
 
         String json = objectMapper.writeValueAsString(blogThatRepeatsName);
         MockHttpServletResponse response = mockMvc.perform(put(BLOGS_ENDPOINT)
-            .contentType(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnprocessableEntity())
@@ -196,13 +195,12 @@ class BlogsControllerITest {
     }
 
 
-
     @Test
     void shouldReturnNotFoundWhenWeTryToFindNotexistentBlog() throws Exception {
         LOGGER.debug("shouldReturnNotFoundWhenWeTryToFindInexistentBlog()");
 
-        mockMvc.perform(get(BLOGS_ENDPOINT+"/"+245325)
-        .contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get(BLOGS_ENDPOINT + "/" + 245325)
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
 
@@ -210,7 +208,7 @@ class BlogsControllerITest {
     void shouldReturnNotFoundWhenWeTryToDeleteNotexistentBlog() throws Exception {
         LOGGER.debug("shouldReturnNotFoundWhenWeTryToFindInexistentBlog()");
 
-        mockMvc.perform(delete(BLOGS_ENDPOINT+"/"+245325)
+        mockMvc.perform(delete(BLOGS_ENDPOINT + "/" + 245325)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -253,13 +251,13 @@ class BlogsControllerITest {
         assertNotNull(response);
     }
 
-    private class MockBlogService{
+    private class MockBlogService {
 
         public List<Blog> findAll() throws Exception {
             LOGGER.debug("findAll()");
             MockHttpServletResponse response = mockMvc.perform(get(BLOGS_ENDPOINT)
-            .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+                    .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
                     .andReturn().getResponse();
             assertNotNull(response);
 
@@ -269,16 +267,17 @@ class BlogsControllerITest {
             responseString = new String(bytes, StandardCharsets.UTF_8);
 
 
-            return objectMapper.readValue(response.getContentAsString(), new TypeReference<List<Blog>>() {});
+            return objectMapper.readValue(response.getContentAsString(), new TypeReference<List<Blog>>() {
+            });
         }
 
         public Optional<Blog> findById(Integer blogId) throws Exception {
             LOGGER.debug("findById()");
-            MockHttpServletResponse response = mockMvc.perform(get(BLOGS_ENDPOINT+"/"+blogId)
+            MockHttpServletResponse response = mockMvc.perform(get(BLOGS_ENDPOINT + "/" + blogId)
                     .characterEncoding("UTF-8")
                     .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andReturn().getResponse();
+                    .andExpect(status().isOk())
+                    .andReturn().getResponse();
             String responseString = response.getContentAsString();
 
             byte[] bytes = responseString.getBytes(StandardCharsets.ISO_8859_1);
@@ -291,12 +290,12 @@ class BlogsControllerITest {
             LOGGER.debug("create() {}", blog);
             String json = objectMapper.writeValueAsString(blog);
             MockHttpServletResponse response = mockMvc.perform(post(BLOGS_ENDPOINT)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(json)
-            .accept(MediaType.APPLICATION_JSON))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(json)
+                    .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isCreated())
                     .andReturn().getResponse();
-            return objectMapper.readValue(response.getContentAsString(),Integer.class);
+            return objectMapper.readValue(response.getContentAsString(), Integer.class);
         }
 
         public Integer update(Blog blog) throws Exception {
@@ -309,7 +308,7 @@ class BlogsControllerITest {
                     .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andReturn().getResponse();
-            return objectMapper.readValue(response.getContentAsString(),Integer.class);
+            return objectMapper.readValue(response.getContentAsString(), Integer.class);
         }
 
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 @Service
 @Transactional
 public class BlogDtoServiceImpl implements BlogDtoService {
@@ -16,7 +17,7 @@ public class BlogDtoServiceImpl implements BlogDtoService {
     BlogDtoDAO blogDtoDAO;
 
     @Autowired
-    BlogDtoServiceImpl(BlogDtoDAO blogDtoDAO){
+    BlogDtoServiceImpl(BlogDtoDAO blogDtoDAO) {
         this.blogDtoDAO = blogDtoDAO;
     }
 

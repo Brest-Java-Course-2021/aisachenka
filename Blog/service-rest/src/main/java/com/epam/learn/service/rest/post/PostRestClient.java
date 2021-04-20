@@ -26,24 +26,25 @@ public class PostRestClient implements PostService {
     }
 
 
-
     @Override
     public List<Post> findAll() {
         LOGGER.debug("findAll()");
-        return restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Post>>() {}).getBody();
+        return restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Post>>() {
+        }).getBody();
     }
 
     @Override
     public Optional<Post> findById(Integer id) {
         LOGGER.debug("findById() {}", id);
         return Optional.ofNullable(restTemplate.exchange(url + "/" + id,
-                HttpMethod.GET, null, new ParameterizedTypeReference<Post>() {}).getBody());
+                HttpMethod.GET, null, new ParameterizedTypeReference<Post>() {
+                }).getBody());
     }
 
     @Override
     public Integer create(Post post) {
-        LOGGER.debug("create() {}",post);
-        return restTemplate.postForEntity(url,post,Integer.class).getBody();
+        LOGGER.debug("create() {}", post);
+        return restTemplate.postForEntity(url, post, Integer.class).getBody();
     }
 
     @Override
@@ -51,8 +52,8 @@ public class PostRestClient implements PostService {
         LOGGER.debug("update() {}", post);
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
-        HttpEntity<Post> httpEntity = new HttpEntity<>(post,headers);
-        ResponseEntity<Integer> responseEntity = restTemplate.exchange(url, HttpMethod.PUT,httpEntity,Integer.class);
+        HttpEntity<Post> httpEntity = new HttpEntity<>(post, headers);
+        ResponseEntity<Integer> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, httpEntity, Integer.class);
         return responseEntity.getBody();
     }
 
@@ -62,21 +63,22 @@ public class PostRestClient implements PostService {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         HttpEntity<Post> httpEntity = new HttpEntity<>(headers);
-        ResponseEntity<Integer> responseEntity = restTemplate.exchange(url+"/"+id, HttpMethod.DELETE,httpEntity,Integer.class);
+        ResponseEntity<Integer> responseEntity = restTemplate.exchange(url + "/" + id, HttpMethod.DELETE, httpEntity, Integer.class);
         return responseEntity.getBody();
     }
 
     @Override
     public List<Post> searchByTwoDates(LocalDate dateBefore, LocalDate dateAfter) {
-        LOGGER.debug("searchByTwoDates() {} {}",dateBefore,dateAfter);
-        String dateBeforeString = dateBefore == null? "":dateBefore.toString();
-        String dateAfterString = dateAfter == null? "":dateAfter.toString();
+        LOGGER.debug("searchByTwoDates() {} {}", dateBefore, dateAfter);
+        String dateBeforeString = dateBefore == null ? "" : dateBefore.toString();
+        String dateAfterString = dateAfter == null ? "" : dateAfter.toString();
 
 
         String searchUrl = new StringBuilder(url)
                 .append("/search?dateBefore=").append(dateBeforeString)
                 .append("&dateAfter=").append(dateAfterString)
                 .toString();
-        return restTemplate.exchange(searchUrl, HttpMethod.GET,null, new ParameterizedTypeReference<List<Post>>(){}).getBody();
+        return restTemplate.exchange(searchUrl, HttpMethod.GET, null, new ParameterizedTypeReference<List<Post>>() {
+        }).getBody();
     }
 }

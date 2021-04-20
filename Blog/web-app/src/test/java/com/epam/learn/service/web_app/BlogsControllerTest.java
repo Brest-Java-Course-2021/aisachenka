@@ -47,7 +47,6 @@ class BlogsControllerTest {
     private ArgumentCaptor<Blog> captor;
 
 
-
     @Test
     void shouldReturnAllBlogs() throws Exception {
 

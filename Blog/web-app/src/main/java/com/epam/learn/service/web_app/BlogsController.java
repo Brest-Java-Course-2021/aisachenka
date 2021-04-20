@@ -28,29 +28,29 @@ public class BlogsController {
     }
 
     @GetMapping("/blogs")
-    public String getBlogs(Model model){
+    public String getBlogs(Model model) {
         LOGGER.debug("getBlogs()");
         model.addAttribute("blogs", blogDtoService.getAllBlogsWithMaxLikes());
         return "blogs";
     }
 
     @GetMapping(value = "blog/{id}")
-    public String getFormOfEditBlog(@PathVariable Integer id, Model model){
+    public String getFormOfEditBlog(@PathVariable Integer id, Model model) {
         LOGGER.debug("getFormOfEditBlog() {} {}", id, model);
         Optional<Blog> optionalBlog = blogService.findById(id);
-        model.addAttribute("blog",optionalBlog.get());
+        model.addAttribute("blog", optionalBlog.get());
         return "blog";
 
     }
 
     @GetMapping(value = "blog/add")
-    public String getFormOfaddBlog(Model model){
+    public String getFormOfaddBlog(Model model) {
         model.addAttribute("blog", new Blog());
         return "newBlog";
     }
 
     @GetMapping(value = "blog/{id}/delete")
-    public String deleteBlog(@PathVariable Integer id){
+    public String deleteBlog(@PathVariable Integer id) {
         LOGGER.debug("deleteBlog() id={}", id);
         // todo: допилить js для delete, a может и не допилить
         blogService.delete(id);
@@ -58,14 +58,14 @@ public class BlogsController {
     }
 
     @PostMapping(value = "blog/add")
-    public String addBlog(Blog blog){
-        LOGGER.debug("addBlog() {}",blog);
+    public String addBlog(Blog blog) {
+        LOGGER.debug("addBlog() {}", blog);
         blogService.create(blog);
         return "redirect:/blogs";
     }
 
     @PostMapping(value = "blog/{id}")
-    public String editBlog(Blog blog){
+    public String editBlog(Blog blog) {
         LOGGER.debug("editBlog() {}", blog);
         blogService.update(blog);
         return "redirect:/blogs";

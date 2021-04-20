@@ -12,7 +12,8 @@ public class BlogDTO {
         this.maxNumberOfLikes = maxNumberOfLikes;
     }
 
-    public BlogDTO() {}
+    public BlogDTO() {
+    }
 
     public Integer getBlogId() {
         return blogId;

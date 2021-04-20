@@ -34,7 +34,7 @@ class BlogDTOServiceRestTest {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(BlogDTOServiceRestTest.class);
 
-    public static final String BLOG_DTO_URL="http://localhost:8090/blogs-dto";
+    public static final String BLOG_DTO_URL = "http://localhost:8090/blogs-dto";
 
     @Autowired
     BlogDtoService blogDtoService;
@@ -57,14 +57,14 @@ class BlogDTOServiceRestTest {
     void shouldGetAllBlogsWithMaxLikes() throws Exception {
         // mocked URI with stubbed return parameters
         LOGGER.debug("shouldGetAllBlogsWithMaxLikes()");
-        mockServer.expect(ExpectedCount.once(),requestTo(new URI(BLOG_DTO_URL)))
+        mockServer.expect(ExpectedCount.once(), requestTo(new URI(BLOG_DTO_URL)))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(withStatus(HttpStatus.OK)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(mapper.writeValueAsString(List.of(
-                        createBlogDTO(0),
-                        createBlogDTO(1))
-                )));
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(mapper.writeValueAsString(List.of(
+                                createBlogDTO(0),
+                                createBlogDTO(1))
+                        )));
 
         // call of mocked URI
         List<BlogDTO> allBlogsWithMaxLikes = blogDtoService.getAllBlogsWithMaxLikes();
@@ -76,13 +76,12 @@ class BlogDTOServiceRestTest {
         assertTrue(allBlogsWithMaxLikes.size() > 0);
 
 
-
     }
 
-    private BlogDTO createBlogDTO(Integer id){
+    private BlogDTO createBlogDTO(Integer id) {
         BlogDTO blogDTO = new BlogDTO();
         blogDTO.setBlogId(id);
-        blogDTO.setBlogName("blog "+ id);
+        blogDTO.setBlogName("blog " + id);
         return blogDTO;
     }
 

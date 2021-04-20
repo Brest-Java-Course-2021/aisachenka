@@ -57,11 +57,11 @@ class BlogServiceRestTest {
         mockServer.expect(requestTo(new URI(BLOGS_URL)))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(withStatus(HttpStatus.OK)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(mapper.writeValueAsString(List.of(
-                        getBlog(0),
-                        getBlog(1)
-                ))));
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(mapper.writeValueAsString(List.of(
+                                getBlog(0),
+                                getBlog(1)
+                        ))));
 
 
         // call of mocked URI
@@ -72,22 +72,22 @@ class BlogServiceRestTest {
         mockServer.verify();
 
         assertNotNull(blogs);
-        assertTrue(blogs.size()>0);
+        assertTrue(blogs.size() > 0);
     }
 
     @Test
-    void shouldFindBlogById() throws Exception{
+    void shouldFindBlogById() throws Exception {
         LOGGER.debug("shouldFindBlogById()");
         //given
         Integer id = 1;
         Blog blog = new Blog();
         blog.setBlogId(1);
-        blog.setBlogName("blog "+ id);
-        mockServer.expect(requestTo(new URI(BLOGS_URL+"/"+id)))
+        blog.setBlogName("blog " + id);
+        mockServer.expect(requestTo(new URI(BLOGS_URL + "/" + id)))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(withStatus(HttpStatus.OK)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(mapper.writeValueAsString(blog)));
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(mapper.writeValueAsString(blog)));
         // when
         Optional<Blog> optionalBlog = blogService.findById(id);
 
@@ -101,15 +101,15 @@ class BlogServiceRestTest {
     }
 
     @Test
-    void shouldCreateBlog() throws Exception{
+    void shouldCreateBlog() throws Exception {
         LOGGER.debug("shouldCreateBlog()");
         // given
         Blog blog = new Blog("TEST");
         mockServer.expect(requestTo(new URI(BLOGS_URL)))
                 .andExpect(method(HttpMethod.POST))
                 .andRespond(withStatus(HttpStatus.CREATED)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(mapper.writeValueAsString("1")));
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(mapper.writeValueAsString("1")));
 
         // when
 
@@ -122,7 +122,7 @@ class BlogServiceRestTest {
     }
 
     @Test
-    void shouldUpdateBlog() throws Exception{
+    void shouldUpdateBlog() throws Exception {
         LOGGER.debug("shouldUpdateBlog()");
 
         Blog blog = new Blog("TEST2");
@@ -130,8 +130,8 @@ class BlogServiceRestTest {
         mockServer.expect(requestTo(new URI(BLOGS_URL)))
                 .andExpect(method(HttpMethod.PUT))
                 .andRespond(withStatus(HttpStatus.OK)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(mapper.writeValueAsString("1")));
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(mapper.writeValueAsString("1")));
 
         Integer update = blogService.update(blog);
         mockServer.verify();
@@ -146,7 +146,7 @@ class BlogServiceRestTest {
 
         Integer blogId = 3;
 
-        mockServer.expect(requestTo(new URI(BLOGS_URL + "/" +blogId)))
+        mockServer.expect(requestTo(new URI(BLOGS_URL + "/" + blogId)))
                 .andExpect(method(HttpMethod.DELETE))
                 .andRespond(withStatus(HttpStatus.OK)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -158,10 +158,10 @@ class BlogServiceRestTest {
         assertNotNull(update);
     }
 
-    Blog getBlog(Integer id){
+    Blog getBlog(Integer id) {
         Blog blog = new Blog();
         blog.setBlogId(id);
-        blog.setBlogName("blog "+ id);
+        blog.setBlogName("blog " + id);
         return blog;
     }
 

@@ -51,57 +51,56 @@ public class PostDAOJdbc implements PostDAO {
     RowMapper<Post> rowMapper = BeanPropertyRowMapper.newInstance(Post.class);
 
     @Autowired
-    public PostDAOJdbc(DataSource dataSource, BlogDAO blogDAO){
+    public PostDAOJdbc(DataSource dataSource, BlogDAO blogDAO) {
         namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
         this.blogDAO = blogDAO;
     }
 
 
-
     @Override
     public List<Post> findAll() {
         LOGGER.debug("findAll()");
-        return namedParameterJdbcTemplate.query(select ,rowMapper);
+        return namedParameterJdbcTemplate.query(select, rowMapper);
     }
 
     @Override
     public Optional<Post> findById(Integer id) {
-        LOGGER.debug("findById() {}",id);
+        LOGGER.debug("findById() {}", id);
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("POST_ID", id);
-        List<Post> results  = namedParameterJdbcTemplate.query(findById,sqlParameterSource,rowMapper);
+        List<Post> results = namedParameterJdbcTemplate.query(findById, sqlParameterSource, rowMapper);
         return Optional.ofNullable(DataAccessUtils.uniqueResult(results));
     }
 
     @Override
     public Integer create(Post post) {
-        LOGGER.debug("create() {}",post);
+        LOGGER.debug("create() {}", post);
 
-        if(blogDAO.findByName(post.getBlogName()).isEmpty()){
+        if (blogDAO.findByName(post.getBlogName()).isEmpty()) {
             LOGGER.warn("Blog with such name doesn't exists {}", post);
             throw new SuchBlogNotExistsException("Blog with such name doesn't exists");
         }
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        Map<String,Object> parametrizedValues = new HashMap<>();
+        Map<String, Object> parametrizedValues = new HashMap<>();
         parametrizedValues.put("BLOG_NAME", post.getBlogName());
         parametrizedValues.put("TEXT", post.getText());
         parametrizedValues.put("NUMBER_OF_LIKES", post.getNumberOfLikes());
         parametrizedValues.put("LOCAL_DATE", post.getLocalDate());
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource(parametrizedValues);
-        namedParameterJdbcTemplate.update(create, sqlParameterSource,keyHolder);
+        namedParameterJdbcTemplate.update(create, sqlParameterSource, keyHolder);
         return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
 
     @Override
     public Integer update(Post post) {
-        LOGGER.debug("update() {}",post);
+        LOGGER.debug("update() {}", post);
 
-        if(blogDAO.findByName(post.getBlogName()).isEmpty()){
+        if (blogDAO.findByName(post.getBlogName()).isEmpty()) {
             LOGGER.warn("Blog with such name doesn't exists {}", post);
             throw new SuchBlogNotExistsException("Blog with such name doesn't exists");
         }
 
-        Map<String,Object> parametrizedValues = new HashMap<>();
+        Map<String, Object> parametrizedValues = new HashMap<>();
         parametrizedValues.put("BLOG_NAME", post.getBlogName());
         parametrizedValues.put("TEXT", post.getText());
         parametrizedValues.put("NUMBER_OF_LIKES", post.getNumberOfLikes());
@@ -115,22 +114,22 @@ public class PostDAOJdbc implements PostDAO {
     @Override
     public Integer delete(Integer id) {
         LOGGER.debug("delete() by id{} ", id);
-        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("POST_ID",id);
-        return namedParameterJdbcTemplate.update(delete,sqlParameterSource);
+        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("POST_ID", id);
+        return namedParameterJdbcTemplate.update(delete, sqlParameterSource);
     }
 
     @Override
     public List<Post> searchByTwoDates(LocalDate dateBefore, LocalDate dateAfter) {
         LOGGER.debug("searchByTwoDates() before={} after={}", dateBefore, dateAfter);
-        if(dateAfter.isBefore(dateBefore)) {
+        if (dateAfter.isBefore(dateBefore)) {
             LOGGER.warn("searchByTwoDates() throw IllegalArgumentException because Date After should be later than date before");
             throw new IllegalArgumentException("Date After should be later than date before");
         }
-        Map<String,Object> parametrizedValues = new HashMap<>();
+        Map<String, Object> parametrizedValues = new HashMap<>();
         parametrizedValues.put("DATE_BEFORE", dateBefore);
         parametrizedValues.put("DATE_AFTER", dateAfter);
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource(parametrizedValues);
-        return namedParameterJdbcTemplate.query(searchByDate,sqlParameterSource,rowMapper);
+        return namedParameterJdbcTemplate.query(searchByDate, sqlParameterSource, rowMapper);
     }
 
 }

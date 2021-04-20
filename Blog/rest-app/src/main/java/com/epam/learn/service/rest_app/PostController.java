@@ -18,22 +18,23 @@ import java.util.Optional;
 
 @RestController
 public class PostController {
-    private static final Logger LOGGER= LoggerFactory.getLogger(PostController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PostController.class);
 
     PostService postService;
+
     @Autowired
     public PostController(PostService postService) {
         this.postService = postService;
     }
 
     @GetMapping("/posts")
-    List<Post> getAllPosts(){
+    List<Post> getAllPosts() {
         LOGGER.debug("getAllPosts()");
         return postService.findAll();
     }
 
     @GetMapping("/posts/{id}")
-    ResponseEntity<Object> getPostById(@PathVariable Integer id){
+    ResponseEntity<Object> getPostById(@PathVariable Integer id) {
         LOGGER.debug("getPostById() {}", id);
         Optional<Post> postOptional = postService.findById(id);
         return postOptional.isPresent()
@@ -42,7 +43,7 @@ public class PostController {
     }
 
     @PostMapping(value = "/posts", consumes = "application/json", produces = "application/json")
-    ResponseEntity<Integer> createPost(@Valid @RequestBody Post post){
+    ResponseEntity<Integer> createPost(@Valid @RequestBody Post post) {
         LOGGER.debug("getPostById() {}", post);
         return new ResponseEntity<>(postService.create(post), HttpStatus.CREATED);
     }
@@ -50,7 +51,7 @@ public class PostController {
 
     //TODO: make normal date validator
     @PutMapping(value = "/posts", consumes = "application/json", produces = "application/json")
-    ResponseEntity<Object> updatePost(@Valid @RequestBody Post post){
+    ResponseEntity<Object> updatePost(@Valid @RequestBody Post post) {
         LOGGER.debug("updatePost() {}", post);
         Integer numberOfUpdatedPosts = postService.update(post);
         return numberOfUpdatedPosts > 0
@@ -59,7 +60,7 @@ public class PostController {
     }
 
     @DeleteMapping(value = "/posts/{id}")
-    ResponseEntity<Object> deletePost(@PathVariable Integer id){
+    ResponseEntity<Object> deletePost(@PathVariable Integer id) {
         LOGGER.debug("deletePost() {}", id);
         Integer numberOfDeletedPosts = postService.delete(id);
         return numberOfDeletedPosts > 0
@@ -70,17 +71,17 @@ public class PostController {
 
     @GetMapping("/posts/search")
     List<Post> getPostBetweenTwoDates(
-            @RequestParam(value = "dateBefore", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate dateBefore,
-            @RequestParam(value = "dateAfter", required = false)  @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate dateAfter) {
+            @RequestParam(value = "dateBefore", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateBefore,
+            @RequestParam(value = "dateAfter", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateAfter) {
         LOGGER.debug("getPostBetweenTwoDates() before={} after={}", dateBefore, dateAfter);
 
-        if(dateBefore == null)
-            dateBefore = LocalDate.of(LocalDate.MIN.getYear(), 1,1);
+        if (dateBefore == null)
+            dateBefore = LocalDate.of(LocalDate.MIN.getYear(), 1, 1);
 
-        if(dateAfter ==null)
-            dateAfter = LocalDate.of(LocalDate.MAX.getYear(), 1,1);
+        if (dateAfter == null)
+            dateAfter = LocalDate.of(LocalDate.MAX.getYear(), 1, 1);
 
-        return postService.searchByTwoDates(dateBefore,dateAfter);
+        return postService.searchByTwoDates(dateBefore, dateAfter);
     }
 
 }

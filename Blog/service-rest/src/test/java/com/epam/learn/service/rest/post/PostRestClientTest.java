@@ -66,8 +66,8 @@ public class PostRestClientTest {
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(withStatus(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON)
                         .body(mapper.writeValueAsString(List.of(
-                                createPost(1,"animals", RandomStringUtils.randomAlphabetic(250), 666,LocalDate.of(2020,1,1)),
-                                createPost(2,"kitty", RandomStringUtils.randomAlphabetic(250), 333,LocalDate.of(2018,1,1))
+                                createPost(1, "animals", RandomStringUtils.randomAlphabetic(250), 666, LocalDate.of(2020, 1, 1)),
+                                createPost(2, "kitty", RandomStringUtils.randomAlphabetic(250), 333, LocalDate.of(2018, 1, 1))
                         ))));
 
         List<Post> restClientAll = restClient.findAll();
@@ -82,11 +82,11 @@ public class PostRestClientTest {
     void shouldReturnPostById() throws Exception {
         LOGGER.debug("shouldReturnPostById()");
         //when
-        mockServer.expect(ExpectedCount.once(), requestTo(new URI(POST_URL+"/"+1)))
+        mockServer.expect(ExpectedCount.once(), requestTo(new URI(POST_URL + "/" + 1)))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(withStatus(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON)
                         .body(mapper.writeValueAsString(
-                                Optional.of(createPost(1,"animals", RandomStringUtils.randomAlphabetic(250), 666,LocalDate.of(2020,1,1)))
+                                Optional.of(createPost(1, "animals", RandomStringUtils.randomAlphabetic(250), 666, LocalDate.of(2020, 1, 1)))
                         )));
 
         Optional<Post> post = restClient.findById(1);
@@ -137,7 +137,7 @@ public class PostRestClientTest {
         LOGGER.debug("shouldDeletePost()");
         //when
         Integer id = 1;
-        mockServer.expect(ExpectedCount.once(), requestTo(new URI(POST_URL+"/"+id)))
+        mockServer.expect(ExpectedCount.once(), requestTo(new URI(POST_URL + "/" + id)))
                 .andExpect(method(HttpMethod.DELETE))
                 .andRespond(withStatus(HttpStatus.OK)
                         .contentType(MediaType.APPLICATION_JSON).body(mapper.writeValueAsString("1")));
@@ -155,19 +155,19 @@ public class PostRestClientTest {
     void shouldFilterByDate() throws Exception {
         LOGGER.debug("shouldReturnAllPosts()");
         //when
-        LocalDate dateBefore = LocalDate.of(2019,1,1);
-        LocalDate dateAfter = LocalDate.of(2019,5,1);
+        LocalDate dateBefore = LocalDate.of(2019, 1, 1);
+        LocalDate dateAfter = LocalDate.of(2019, 5, 1);
         mockServer.expect(ExpectedCount.once(), requestTo(new URI(new StringBuilder(POST_URL)
                 .append("/search?dateBefore=").append(dateBefore.toString())
                 .append("&dateAfter=").append(dateAfter).toString())))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(withStatus(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON)
                         .body(mapper.writeValueAsString(List.of(
-                                createPost(1,"animals", RandomStringUtils.randomAlphabetic(250), 666,LocalDate.of(2020,1,1)),
-                                createPost(2,"kitty", RandomStringUtils.randomAlphabetic(250), 333,LocalDate.of(2018,1,1))
+                                createPost(1, "animals", RandomStringUtils.randomAlphabetic(250), 666, LocalDate.of(2020, 1, 1)),
+                                createPost(2, "kitty", RandomStringUtils.randomAlphabetic(250), 333, LocalDate.of(2018, 1, 1))
                         ))));
 
-        List<Post> searchByTwoDates = restClient.searchByTwoDates(dateBefore,dateAfter);
+        List<Post> searchByTwoDates = restClient.searchByTwoDates(dateBefore, dateAfter);
         mockServer.verify();
 
         assertNotNull(searchByTwoDates);

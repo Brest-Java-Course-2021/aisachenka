@@ -136,7 +136,7 @@ public class PostsControllerTest {
                 .andExpect(redirectedUrl("/posts"));
 
         verify(postService).create(captor.capture());
-        assertEquals(p1,captor.getValue());
+        assertEquals(p1, captor.getValue());
     }
 
     @Test
@@ -146,7 +146,7 @@ public class PostsControllerTest {
         when(blogService.findAll()).thenReturn(List.of(b1, b2));
 
         Integer searchedId = 1;
-        Post p1 = createPost(searchedId, b1.getBlogName(),"blah blah", 444, LocalDate.of(2018,12,31));
+        Post p1 = createPost(searchedId, b1.getBlogName(), "blah blah", 444, LocalDate.of(2018, 12, 31));
         when(postService.findById(searchedId)).thenReturn(Optional.of(p1));
 
         mockMvc.perform(MockMvcRequestBuilders.get(new URI("/post/" + searchedId)))
@@ -174,7 +174,7 @@ public class PostsControllerTest {
     void shouldUpdatePost() throws Exception {
         Post p1 = createPost(1, "kitty", "blah blah", 333, LocalDate.of(2020, 5, 5));
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/post/"+p1.getPostId())
+        mockMvc.perform(MockMvcRequestBuilders.post("/post/" + p1.getPostId())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("postId", p1.getPostId().toString())
                 .param("blogName", p1.getBlogName())
@@ -187,7 +187,7 @@ public class PostsControllerTest {
                 .andExpect(redirectedUrl("/posts"));
 
         verify(postService).update(captor.capture());
-        assertEquals(p1,captor.getValue());
+        assertEquals(p1, captor.getValue());
     }
 
     @Test
@@ -195,7 +195,7 @@ public class PostsControllerTest {
         Integer idOfPostThatShouldBeDeleted = 1;
         when(postService.delete(idOfPostThatShouldBeDeleted)).thenReturn(1);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/post/"+idOfPostThatShouldBeDeleted+"/delete"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/post/" + idOfPostThatShouldBeDeleted + "/delete"))
                 .andDo(print())
                 .andExpect(status().isFound())
                 .andExpect(view().name("redirect:/posts"))
@@ -208,7 +208,7 @@ public class PostsControllerTest {
         Post p2 = createPost(2, "Deep Purple", RandomStringUtils.randomAlphabetic(250), 666, LocalDate.of(2020, 1, 1));
 
 
-        when(postService.searchByTwoDates(LocalDate.of(2018, 6, 6),LocalDate.of(2020, 1, 1))).thenReturn(
+        when(postService.searchByTwoDates(LocalDate.of(2018, 6, 6), LocalDate.of(2020, 1, 1))).thenReturn(
                 List.of(p1, p2)
         );
 

@@ -10,7 +10,7 @@ public class Post {
     private Integer postId;
 
     @NotBlank(message = "Blog name is mandatory")
-    @Size(min = 2, message = "Blog name should be b-n 2 and 50 characters",max = 50)
+    @Size(min = 2, message = "Blog name should be b-n 2 and 50 characters", max = 50)
     private String blogName;
 
     @NotBlank(message = "Post text is mandatory")

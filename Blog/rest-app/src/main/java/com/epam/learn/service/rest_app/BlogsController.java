@@ -38,19 +38,19 @@ public class BlogsController {
         Optional<Blog> optionalBlog = blogService.findById(id);
         return optionalBlog.isPresent()
                 ? new ResponseEntity<>(optionalBlog.get(), HttpStatus.OK)
-                : new ResponseEntity<>(new ErrorResponse(List.of("Can't find Blog with such id")) ,HttpStatus.NOT_FOUND);
+                : new ResponseEntity<>(new ErrorResponse(List.of("Can't find Blog with such id")), HttpStatus.NOT_FOUND);
 
     }
 
 
-    @PostMapping(value = "/blogs",consumes = {"application/json"},produces = {"application/json"})
-    public ResponseEntity<Integer> createBlog(@Valid @RequestBody Blog blog){
+    @PostMapping(value = "/blogs", consumes = {"application/json"}, produces = {"application/json"})
+    public ResponseEntity<Integer> createBlog(@Valid @RequestBody Blog blog) {
         LOGGER.debug("createBlog() {}", blog);
         return new ResponseEntity<>(blogService.create(blog), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/blogs",consumes = {"application/json"},produces = {"application/json"})
-    public ResponseEntity<Object> updateBlog(@Valid @RequestBody Blog blog){
+    @PutMapping(value = "/blogs", consumes = {"application/json"}, produces = {"application/json"})
+    public ResponseEntity<Object> updateBlog(@Valid @RequestBody Blog blog) {
         LOGGER.debug("updateBlog() {}", blog);
         Integer count = blogService.update(blog);
         return count > 0
@@ -61,7 +61,7 @@ public class BlogsController {
 
 
     @DeleteMapping(value = "/blogs/{id}")
-    public ResponseEntity<Object>  deleteBlogById(@PathVariable Integer id) {
+    public ResponseEntity<Object> deleteBlogById(@PathVariable Integer id) {
         LOGGER.debug("deleteBlogById() {}", id);
         Integer numberOfDeletedBlogs = blogService.delete(id);
 

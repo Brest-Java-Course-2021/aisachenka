@@ -26,26 +26,24 @@ public class SpringConfig {
 
 
     @Bean
-    RestTemplate getRestTemplate(){
+    RestTemplate getRestTemplate() {
         return new RestTemplate(new SimpleClientHttpRequestFactory());
     }
 
     @Bean
-    BlogService getBlogService(){
-        return new BlogServiceRest(String.format("%s://%s:%d/blogs",protocol,url,port),getRestTemplate());
+    BlogService getBlogService() {
+        return new BlogServiceRest(String.format("%s://%s:%d/blogs", protocol, url, port), getRestTemplate());
     }
 
     @Bean
-    BlogDtoService getBlogDTOService(){
-        return new BlogDTOServiceRest(String.format("%s://%s:%d/blogs-dto",protocol,url,port),getRestTemplate());
+    BlogDtoService getBlogDTOService() {
+        return new BlogDTOServiceRest(String.format("%s://%s:%d/blogs-dto", protocol, url, port), getRestTemplate());
     }
 
     @Bean
-    PostService postService(){
-        return new PostRestClient(String.format("%s://%s:%d/posts",protocol,url,port),getRestTemplate());
+    PostService postService() {
+        return new PostRestClient(String.format("%s://%s:%d/posts", protocol, url, port), getRestTemplate());
     }
-
-
 
 
 }

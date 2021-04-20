@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 @Configuration
 public class SpringJdbcConfig {
     @Bean
-    public DataSource h2DataSource(){
+    public DataSource h2DataSource() {
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
                 .addScript("create-test-db.sql")

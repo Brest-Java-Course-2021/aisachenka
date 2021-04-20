@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {SpringJdbcConfig.class, ServiceTestConfig.class, })
+@ContextConfiguration(classes = {SpringJdbcConfig.class, ServiceTestConfig.class,})
 @Transactional
 class PostServiceImplITest {
 
@@ -37,7 +37,7 @@ class PostServiceImplITest {
         List<Post> posts = postService.findAll();
         assertNotNull(posts);
         assertTrue(posts.size() > 0);
-        for(Post post: posts){
+        for (Post post : posts) {
             assertNotNull(post.getBlogName());
             assertNotNull(post.getPostId());
             assertNotNull(post.getNumberOfLikes());
@@ -52,7 +52,7 @@ class PostServiceImplITest {
         List<Post> posts = postService.findAll();
         assertNotNull(posts);
         assertTrue(posts.size() > 0);
-        for(Post post: posts){
+        for (Post post : posts) {
             assertNotNull(post.getBlogName());
             assertNotNull(post.getPostId());
             assertNotNull(post.getNumberOfLikes());
@@ -63,9 +63,9 @@ class PostServiceImplITest {
         Optional<Post> post = postService.findById(1);
 
         assertTrue(post.isPresent());
-        Post expected = new Post( "kitty", "Cute kitty", LocalDate.of(2018,1,1),123);
+        Post expected = new Post("kitty", "Cute kitty", LocalDate.of(2018, 1, 1), 123);
         expected.setPostId(1);
-        assertEquals( expected,post.get());
+        assertEquals(expected, post.get());
 
     }
 
@@ -75,7 +75,7 @@ class PostServiceImplITest {
         List<Post> posts = postService.findAll();
         assertNotNull(posts);
         assertTrue(posts.size() > 0);
-        for(Post post: posts){
+        for (Post post : posts) {
             assertNotNull(post.getBlogName());
             assertNotNull(post.getPostId());
             assertNotNull(post.getNumberOfLikes());
@@ -83,7 +83,7 @@ class PostServiceImplITest {
             assertNotNull(post.getLocalDate());
         }
 
-        Post expectedPost =  new Post ("kitty", "blah blah", LocalDate.of(2021,3,14), 4321);
+        Post expectedPost = new Post("kitty", "blah blah", LocalDate.of(2021, 3, 14), 4321);
 
         Integer createdPostId = postService.create(expectedPost);
         assertTrue(createdPostId > 0);
@@ -98,7 +98,7 @@ class PostServiceImplITest {
         List<Post> posts = postService.findAll();
         assertNotNull(posts);
         assertTrue(posts.size() > 0);
-        for(Post post: posts){
+        for (Post post : posts) {
             assertNotNull(post.getBlogName());
             assertNotNull(post.getPostId());
             assertNotNull(post.getNumberOfLikes());
@@ -106,9 +106,9 @@ class PostServiceImplITest {
             assertNotNull(post.getLocalDate());
         }
 
-        Post expectedPost = createPost(1,"99999", "blah blah", 4321, LocalDate.of(2021,3,14));
+        Post expectedPost = createPost(1, "99999", "blah blah", 4321, LocalDate.of(2021, 3, 14));
 
-        assertThrows(SuchBlogNotExistsException.class,()->{
+        assertThrows(SuchBlogNotExistsException.class, () -> {
             Integer updatedPosts = postService.create(expectedPost);
         });
     }
@@ -119,7 +119,7 @@ class PostServiceImplITest {
         List<Post> posts = postService.findAll();
         assertNotNull(posts);
         assertTrue(posts.size() > 0);
-        for(Post post: posts){
+        for (Post post : posts) {
             assertNotNull(post.getBlogName());
             assertNotNull(post.getPostId());
             assertNotNull(post.getNumberOfLikes());
@@ -127,7 +127,7 @@ class PostServiceImplITest {
             assertNotNull(post.getLocalDate());
         }
 
-        Post expectedPost = createPost(1,"kitty", "Test", 1337, LocalDate.of(2012,12,12));
+        Post expectedPost = createPost(1, "kitty", "Test", 1337, LocalDate.of(2012, 12, 12));
 
         Integer numberOfUpdatedRows = postService.update(expectedPost);
 
@@ -143,7 +143,7 @@ class PostServiceImplITest {
         List<Post> posts = postService.findAll();
         assertNotNull(posts);
         assertTrue(posts.size() > 0);
-        for(Post post: posts){
+        for (Post post : posts) {
             assertNotNull(post.getBlogName());
             assertNotNull(post.getPostId());
             assertNotNull(post.getNumberOfLikes());
@@ -151,9 +151,9 @@ class PostServiceImplITest {
             assertNotNull(post.getLocalDate());
         }
 
-        Post expectedPost = createPost(1,"99999", "Test", 1337, LocalDate.of(2012,12,12));
+        Post expectedPost = createPost(1, "99999", "Test", 1337, LocalDate.of(2012, 12, 12));
 
-        assertThrows(SuchBlogNotExistsException.class,()->{
+        assertThrows(SuchBlogNotExistsException.class, () -> {
             postService.update(expectedPost);
         });
     }
@@ -165,7 +165,7 @@ class PostServiceImplITest {
         List<Post> posts = postService.findAll();
         assertNotNull(posts);
         assertTrue(posts.size() > 0);
-        for(Post post: posts){
+        for (Post post : posts) {
             assertNotNull(post.getBlogName());
             assertNotNull(post.getPostId());
             assertNotNull(post.getNumberOfLikes());
@@ -183,10 +183,10 @@ class PostServiceImplITest {
     @Test
     void searchByTwoDatesNormalTest() {
         LOGGER.debug("searchByTwoDatesTest()");
-        List<Post> posts = postService.searchByTwoDates(LocalDate.of(2018,1,1),LocalDate.of(2020,1,1));
+        List<Post> posts = postService.searchByTwoDates(LocalDate.of(2018, 1, 1), LocalDate.of(2020, 1, 1));
         assertNotNull(posts);
         assertTrue(posts.size() > 0);
-        for(Post post: posts){
+        for (Post post : posts) {
             assertNotNull(post.getBlogName());
             assertNotNull(post.getPostId());
             assertNotNull(post.getNumberOfLikes());
@@ -194,21 +194,21 @@ class PostServiceImplITest {
             assertNotNull(post.getLocalDate());
         }
 
-        assertTrue(posts.contains(createPost( 1, "kitty", "Cute kitty", 123, LocalDate.of(2018,1,1))));
-        assertTrue(posts.contains(createPost( 2, "kitty", "Cute asdads", 3131, LocalDate.of(2019,10,23))));
+        assertTrue(posts.contains(createPost(1, "kitty", "Cute kitty", 123, LocalDate.of(2018, 1, 1))));
+        assertTrue(posts.contains(createPost(2, "kitty", "Cute asdads", 3131, LocalDate.of(2019, 10, 23))));
 
     }
 
     @Test
     void searchByTwoDatesExceptionalTest() {
         LOGGER.debug("searchByTwoDatesTest()");
-        assertThrows(IllegalArgumentException.class,()->{
-            List<Post> posts = postService.searchByTwoDates(LocalDate.of(2020,1,1), LocalDate.of(2018,1,1));
+        assertThrows(IllegalArgumentException.class, () -> {
+            List<Post> posts = postService.searchByTwoDates(LocalDate.of(2020, 1, 1), LocalDate.of(2018, 1, 1));
             System.out.println("asda");
         });
     }
 
-    Post createPost(Integer postId, String blogName, String text, Integer numberOfLikes, LocalDate date){
+    Post createPost(Integer postId, String blogName, String text, Integer numberOfLikes, LocalDate date) {
         Post post = new Post(blogName, text, date, numberOfLikes);
         post.setPostId(postId);
         return post;

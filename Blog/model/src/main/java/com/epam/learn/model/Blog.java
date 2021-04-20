@@ -9,14 +9,15 @@ public class Blog {
     private Integer blogId;
 
     @NotBlank(message = "Blog name is mandatory")
-    @Size(min = 2, message = "Blog name should be b-n 2 and 50 characters",max = 50)
+    @Size(min = 2, message = "Blog name should be b-n 2 and 50 characters", max = 50)
     private String blogName;
 
-    public Blog(String blogName){
+    public Blog(String blogName) {
         this.blogName = blogName;
     }
 
-    public Blog(){}
+    public Blog() {
+    }
 
     public String getBlogName() {
         return blogName;
