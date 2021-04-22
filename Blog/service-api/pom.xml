@@ -15,7 +15,6 @@
         <dependency>
             <groupId>com.epam.learn</groupId>
             <artifactId>model</artifactId>
-            <version>1.0</version>
         </dependency>
     </dependencies>
 </project>
